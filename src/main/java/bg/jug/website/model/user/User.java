@@ -1,12 +1,32 @@
 package bg.jug.website.model.user;
 
-public class User {
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+
+import bg.jug.website.model.cms.Article;
+import bg.jug.website.model.core.AbstractEntity;
+
+@Entity
+public class User extends AbstractEntity{
 	private String nickname;
+	
 	private String fullname;
+	
 	private String email;
+	
+	@Lob
 	private byte[] photo;
+	
 	private String bio;
+	
 	private String password;
+	
+	@OneToMany(mappedBy = "author")
+	private Set<Article> articles = new HashSet<>();
 	
 	public String getNickname() {
 		return nickname;
