@@ -1,12 +1,12 @@
-package bg.jug.website.repository.cms;
+package bg.jug.website.user;
 
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
 
-import bg.jug.website.model.cms.Article;
 import bg.jug.website.model.cms.Page;
+import bg.jug.website.model.user.User;
 
 @Repository
-public interface ArticleRepository extends EntityRepository<Article, Long>
+public interface UserRepository extends EntityRepository<User, Long>
 {
 }

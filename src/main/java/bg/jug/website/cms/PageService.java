@@ -1,7 +1,6 @@
 package bg.jug.website.cms;
 
 import bg.jug.website.model.cms.Page;
-import bg.jug.website.repository.cms.PageRepository;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
