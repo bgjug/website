@@ -1,0 +1,180 @@
+/* ==========================================================================
+   Preset Loader
+   ========================================================================== */
+   @import "presets.less";
+
+  //Nav Bar Styles
+  .navbar{margin-bottom: 0; li{color: #666;}}
+  .navbar-brand{
+  	font-size: 48px;
+  	padding: 21px 0;
+  	i{
+  		color: @preset;
+  	}
+  }
+
+  //Sticky Nav
+  .navbar-intimate.affix{
+    width: 100%; 
+    top: 0; 
+    z-index: 9999; 
+    box-shadow: 0 0 3px rgba(000,000,000,.2);
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;  
+    .navbar-brand {padding: 5px 15px; height: 54px; img{width: 100px;}}
+    .navbar-nav > li > a, 
+    .navbar-nav > li > a:focus{padding: 21px 0 13px 0;}
+    .side{
+      padding: 18px 0;
+    }
+    .navbar-nav > li > .dropdown-menu{
+      margin-top: 0;
+    }
+  }
+
+  .navbar-intimate .navbar-nav > li > a:hover, .navbar-intimate .navbar-nav > li.active > a, .navbar-intimate .navbar-nav > li.open > a, .navbar-intimate .navbar-nav > .active > a:hover, .navbar-intimate .navbar-nav > .active > a:focus, .navbar-intimate .navbar-nav > .open > a:hover{
+  	color: @preset;
+    border-bottom: 4px solid @preset;
+  }
+  .navbar-intimate {
+    border: none;
+    border-radius: 0;
+    background: #fff;
+    .navbar-brand {
+    width: 130px;
+    height: auto;
+    padding: 20px 15px;
+    img{
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    }
+  }
+  .navbar-nav{ 
+  > li > a {
+   	font-size: 14px;
+    color: #666;
+    padding: 34px 0 30px 0;
+    margin-right: 32px;
+    margin-bottom: -4px;
+    outline: 0px none;
+    text-transform: uppercase;
+    font-weight: 400;
+    background: transparent none repeat scroll 0% 0%;
+    position: relative;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    border-bottom: 4px solid transparent; 
+  }
+	> li > a:hover,
+	> li.active > a
+	> .active > a:hover, 
+	> .active > a:focus{
+		color: @preset;
+    border-bottom: 4px solid @preset;  
+    background: transparent; 
+	}
+
+  > li > a:hover, > .active > a, > li.open > a, > .active > a:hover, 
+  > .active > a:focus, > .open > a:hover, >.open>a, >.open>a:focus, >.open>a:hover{background: transparent;}
+}
+} 
+
+//Dropdown 
+.dropdown{
+  .dropdown-menu{
+    padding: 0;
+    border-style: solid;
+    border-width: 4px 0 0 0;
+    border-radius: 0;
+    min-width: 200px;
+    left: 0;
+    right: 0;
+    -webkit-animation: fadeIn 0.4s;
+    -moz-animation: fadeInu 0.4s;
+    -ms-animation: fadeIn 0.4s;
+    -o-animation: fadeIn 0.4s;
+    animation: fadeIn 0.4s;  
+    > li > a{
+      color: #666; 
+      padding: 15px 0 10px 15px;
+      margin: 0;
+      border-bottom: 1px solid #f5f5f5;
+      transition: all 0.3s ease;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      &:hover,
+      .active{
+        background: #f5f5f5;
+        color: @preset;
+      }}
+      > li.active > a{
+        background: #f5f5f5;;
+        color: @preset;
+    }
+  }
+} 
+
+
+
+// Mobile Menu
+.wpb-mobile-menu{
+  display: none;
+}
+
+.slicknav_menu {
+  display:none;
+}
+
+@media screen and (max-width: 767px) {
+  .js #wpb-mobile-menu {
+    display:none;
+  }
+  
+  .slicknav_menu {
+    display:block;
+  }
+}
+
+.slicknav_btn{
+  border: 1px solid @preset !important;
+  &:hover{
+    background: @preset;
+  }
+}
+.slicknav_menu .slicknav_icon-bar{
+  background: @preset;
+}
+.slicknav_menu .slicknav_btn:hover .slicknav_icon-bar{
+  background: #fff;
+}
+
+.slicknav_nav{
+  a{
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+  }
+  a:hover,
+  li.active > a
+  > .active > a:hover, 
+  > .active > a:focus{
+    color: @preset; 
+  }
+ > li.active > a{
+      color: @preset;
+  }
+}
+.slicknav_nav ul li a{
+  text-transform: none;
+}
+.slicknav_nav ul > li.active > a{
+    color: @preset;
+}
+
