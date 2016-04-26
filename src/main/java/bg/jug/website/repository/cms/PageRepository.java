@@ -8,4 +8,5 @@ import bg.jug.website.model.cms.Page;
 @Repository
 public interface PageRepository extends EntityRepository<Page, Long>
 {
+	
 }

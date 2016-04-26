@@ -1,4 +1,4 @@
-package bg.jug.website.repository.cms;
+package bg.jug.website.repository.user;
 
 import org.apache.deltaspike.data.api.EntityRepository;
 import org.apache.deltaspike.data.api.Repository;
