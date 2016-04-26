@@ -3,16 +3,22 @@ package bg.jug.website.model.cms;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import bg.jug.website.model.core.AbstractEntity;
 import bg.jug.website.model.taxonomy.Tag;
 
+@Entity
+@XmlRootElement
 public class Page extends AbstractEntity {
 	
 	private String title;
 	
 	private String content;
 	
-	private Set<Tag> tags = new HashSet<>();
+// TODO for stage 2.
+//	private Set<Tag> tags = new HashSet<>();
 	
 	private boolean published = false;
 
@@ -40,11 +46,4 @@ public class Page extends AbstractEntity {
 		this.published = published;
 	}
 
-	public Set<Tag> getTags() {
-		return tags;
-	}
-
-	public void setTags(Set<Tag> tags) {
-		this.tags = tags;
-	}
 }

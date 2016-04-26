@@ -5,6 +5,7 @@ import java.util.Date;
 import bg.jug.website.model.user.User;
 
 public class Article extends Page {
+	
 	private Date createdDate;
 	private User author;
 
