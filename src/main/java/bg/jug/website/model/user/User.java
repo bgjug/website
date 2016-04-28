@@ -6,23 +6,32 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import bg.jug.website.model.cms.Article;
 import bg.jug.website.model.core.AbstractEntity;
 
 @Entity
 public class User extends AbstractEntity{
-	private String nickname;
 	
+	private String nickname;
+
+	@NotNull
+	@Size(min = 1, max = 500)
 	private String fullname;
 	
+	@Size(min = 1, max = 500)
+	@NotNull
 	private String email;
 	
 	@Lob
 	private byte[] photo;
 	
+	@Size(min = 1, max = 1000)
 	private String bio;
 	
+	@NotNull
 	private String password;
 	
 	@OneToMany(mappedBy = "author")

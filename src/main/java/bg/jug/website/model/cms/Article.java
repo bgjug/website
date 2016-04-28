@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import bg.jug.website.model.user.User;
@@ -16,9 +18,11 @@ import bg.jug.website.model.user.User;
 @XmlRootElement
 public class Article extends Page {
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "AUTHOR_ID")
 	private User author;

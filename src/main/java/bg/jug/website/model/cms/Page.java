@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import bg.jug.website.model.core.AbstractEntity;
@@ -13,8 +15,12 @@ import bg.jug.website.model.taxonomy.Tag;
 @XmlRootElement
 public class Page extends AbstractEntity {
 	
+	@NotNull
+	@Size(min=1, max=150)
 	private String title;
 	
+	@NotNull
+	@Size(min=1, max=1000)
 	private String content;
 	
 // TODO for stage 2.
