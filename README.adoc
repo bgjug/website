@@ -1,5 +1,7 @@
 = website
 
+image:https://badges.gitter.im/bgjug/website.svg[link="https://gitter.im/bgjug/website?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"]
+
 For tasks use the github issues.
 If someone wants a task please message your leader :
 Nayden (gochev@gmail.com), Ivan (ivan.st.ivanov@gmail.com), Martin(marto8808@gmail.com)
