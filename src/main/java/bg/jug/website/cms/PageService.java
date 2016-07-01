@@ -43,7 +43,7 @@ public class PageService {
 	}
 
 	@PUT
-	@PathParam("/{id}")
+	@Path("/{id}")
 	public Response updatePage(@PathParam("id") String id) {
 
 		Page page = pageRepository.findBy(Long.parseLong(id));

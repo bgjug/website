@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import bg.jug.website.model.cms.Article;
 
 @Stateless
-@Path("/articles")
+@Path("/article")
 public class ArticleService {
 
 	@Inject
@@ -41,7 +41,7 @@ public class ArticleService {
 	}
 
 	@PUT
-	@PathParam("id")
+	@Path("/{id}")
 	public Response updateArticle(@PathParam("id") String id) {
 
 		Article article = articleRepository.findBy(Long.parseLong(id));
@@ -53,7 +53,7 @@ public class ArticleService {
 	}
 
 	@DELETE
-	@PathParam("id")
+	@Path("/{id}")
 	public Response deleteArticle(@PathParam("id") String id) {
 
 		Article article = articleRepository.findBy(Long.parseLong(id));
@@ -65,7 +65,7 @@ public class ArticleService {
 	}
 
 	@GET
-	@PathParam("id")
+	@Path("/{id}")
 	public Response findArticle(@PathParam("id") String id) {
 
 		Article article = articleRepository.findBy(Long.parseLong(id));
