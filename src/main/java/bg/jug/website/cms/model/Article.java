@@ -1,4 +1,4 @@
-package bg.jug.website.model.cms;
+package bg.jug.website.cms.model;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import bg.jug.website.model.user.User;
+import bg.jug.website.user.model.User;
 
 @Entity
 @XmlRootElement

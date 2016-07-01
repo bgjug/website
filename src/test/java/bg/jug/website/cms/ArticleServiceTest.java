@@ -16,8 +16,10 @@ import javax.ws.rs.core.Response;
 import org.junit.Before;
 import org.junit.Test;
 
-import bg.jug.website.cms.ArticleService.ArticleInfo;
-import bg.jug.website.model.cms.Article;
+import bg.jug.website.cms.model.Article;
+import bg.jug.website.cms.repository.ArticleRepository;
+import bg.jug.website.cms.service.ArticleService;
+import bg.jug.website.cms.service.ArticleService.ArticleInfo;
 
 public class ArticleServiceTest {
 

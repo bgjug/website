@@ -1,4 +1,4 @@
-package bg.jug.website.model.user;
+package bg.jug.website.user.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,8 +9,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import bg.jug.website.model.cms.Article;
-import bg.jug.website.model.core.AbstractEntity;
+import bg.jug.website.cms.model.Article;
+import bg.jug.website.core.model.AbstractEntity;
 
 @Entity
 public class User extends AbstractEntity{

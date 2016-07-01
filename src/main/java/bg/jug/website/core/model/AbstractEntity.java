@@ -1,4 +1,4 @@
-package bg.jug.website.model.core;
+package bg.jug.website.core.model;
 
 import javax.annotation.Generated;
 import javax.persistence.GeneratedValue;

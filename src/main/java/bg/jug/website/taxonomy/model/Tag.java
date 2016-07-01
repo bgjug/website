@@ -1,9 +1,9 @@
-package bg.jug.website.model.taxonomy;
+package bg.jug.website.taxonomy.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import bg.jug.website.model.cms.Page;
+import bg.jug.website.cms.model.Page;
 
 public class Tag {
 	private String name;

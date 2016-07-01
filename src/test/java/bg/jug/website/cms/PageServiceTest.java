@@ -15,7 +15,9 @@ import javax.ws.rs.core.Response;
 import org.junit.Before;
 import org.junit.Test;
 
-import bg.jug.website.model.cms.Page;
+import bg.jug.website.cms.model.Page;
+import bg.jug.website.cms.repository.PageRepository;
+import bg.jug.website.cms.service.PageService;
 
 public class PageServiceTest {
 

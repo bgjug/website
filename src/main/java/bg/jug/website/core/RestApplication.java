@@ -1,4 +1,4 @@
-package bg.jug.website.config;
+package bg.jug.website.core;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

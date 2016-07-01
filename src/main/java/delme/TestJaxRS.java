@@ -7,8 +7,8 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-import bg.jug.website.model.cms.Page;
-import bg.jug.website.cms.PageRepository;
+import bg.jug.website.cms.model.Page;
+import bg.jug.website.cms.repository.PageRepository;
 
 @Path("test")
 @Stateless

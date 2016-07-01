@@ -1,4 +1,4 @@
-package bg.jug.website.model.cms;
+package bg.jug.website.cms.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,8 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import bg.jug.website.model.core.AbstractEntity;
-import bg.jug.website.model.taxonomy.Tag;
+import bg.jug.website.core.model.AbstractEntity;
+import bg.jug.website.taxonomy.model.Tag;
 
 @Entity
 @XmlRootElement

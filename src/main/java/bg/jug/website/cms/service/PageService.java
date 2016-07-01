@@ -1,4 +1,4 @@
-package bg.jug.website.cms;
+package bg.jug.website.cms.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import bg.jug.website.model.cms.Page;
+import bg.jug.website.cms.model.Page;
+import bg.jug.website.cms.repository.PageRepository;
 
 /**
  * @author Ivan St. Ivanov
