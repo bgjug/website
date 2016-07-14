@@ -42,15 +42,10 @@ public class ArticleService {
 	}
 
 	@PUT
-	@Path("/{id}")
-	public Response updateArticle(@PathParam("id") String id) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateArticle(Article article) {
 
-		Article article = articleRepository.findBy(Long.parseLong(id));
-		if (article == null) {
-			return saveArticleInternal(new Article());
-		}
-
-		return saveArticleInternal(article);
+	    return saveArticleInternal(article);
 	}
 
 	@DELETE
@@ -94,14 +89,15 @@ public class ArticleService {
 
 	private Response saveArticleInternal(Article article) {
 
-		Response.Status status = article.getId() == null ? Response.Status.CREATED
-				: Response.Status.OK;
+		boolean isArticleExist = article.getId() != null && articleRepository.findBy(article.getId()) != null;
+		Response.Status status = isArticleExist ? Response.Status.OK
+				: Response.Status.CREATED;
 		Article createdArticle = articleRepository.save(article);
 		return Response.status(status).entity(createdArticle).build();
 	}
 
 	@XmlRootElement
-	static class ArticleInfo {
+	public static class ArticleInfo {
 
 		private Long id;
 		private String title;
