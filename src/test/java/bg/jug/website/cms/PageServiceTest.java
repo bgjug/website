@@ -1,6 +1,7 @@
 package bg.jug.website.cms;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -54,14 +55,24 @@ public class PageServiceTest {
 	@Test
 	public void testUpdatePage(){
 		
-		response = pageService.updatePage("1");
+		page.setTitle("TITLE");
+		Page updatedPage = new Page();
+		updatedPage.setId(1L);
+		updatedPage.setTitle("title");
+		when(pageRepositoryMock.save(page)).thenReturn(updatedPage);
 		
-		verify(pageRepositoryMock).findBy(1L);
+		response = pageService.updatePage(page);
+		
+		verify(pageRepositoryMock).save(page);
 		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		Page result = (Page) response.getEntity();
+		assertEquals(result.getTitle(), "title");
+		assertTrue(result.getId() == 1L);
 		
-		response = pageService.updatePage("2");
+		Page newPage = new Page();
+		newPage.setId(3L);
 		
-		verify(pageRepositoryMock).findBy(2L);
+		response = pageService.updatePage(newPage);
 		assertEquals(response.getStatus(), Response.Status.CREATED.getStatusCode());
 	}
 

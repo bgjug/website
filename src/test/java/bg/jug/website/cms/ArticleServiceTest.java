@@ -1,6 +1,7 @@
 package bg.jug.website.cms;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -59,17 +60,25 @@ public class ArticleServiceTest {
 	@Test
 	public void testUpdateArticle() {
 
-		response = articleService.updateArticle("1");
-
-		verify(articleRepositoryMock).findBy(1L);
+		article.setTitle("TITLE");
+		Article updatedArticle = new Article();
+		updatedArticle.setId(1L);
+		updatedArticle.setTitle("title");
+		when(articleRepositoryMock.save(article)).thenReturn(updatedArticle);
+		
+		response = articleService.updateArticle(article);
+		
+		verify(articleRepositoryMock).save(article);
 		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
-
-		response = articleService.updateArticle("2");
-
-		verify(articleRepositoryMock).findBy(2L);
-		assertEquals(response.getStatus(),
-				Response.Status.CREATED.getStatusCode());
-
+		Article result = (Article) response.getEntity();
+		assertEquals(result.getTitle(), "title");
+		assertTrue(result.getId() == 1L);
+		
+		Article newArticle = new Article();
+		newArticle.setId(3L);
+		
+		response = articleService.updateArticle(newArticle);
+		assertEquals(response.getStatus(), Response.Status.CREATED.getStatusCode());
 	}
 
 	@Test

@@ -44,13 +44,8 @@ public class PageService {
 	}
 
 	@PUT
-	@Path("/{id}")
-	public Response updatePage(@PathParam("id") String id) {
-
-		Page page = pageRepository.findBy(Long.parseLong(id));
-		if(page == null){
-			return savePageInternal(new Page());
-		}
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updatePage(Page page) {
 		
 		return savePageInternal(page);
 	}
@@ -92,8 +87,9 @@ public class PageService {
 
 	private Response savePageInternal(Page page) {
 
-		Response.Status status = page.getId() == null ? Response.Status.CREATED
-				: Response.Status.OK;
+		boolean isPageExist = page.getId() != null && pageRepository.findBy(page.getId()) != null;
+		Response.Status status = isPageExist ? Response.Status.OK
+				: Response.Status.CREATED;
 		Page createdPage = pageRepository.save(page);
 		return Response.status(status).entity(createdPage).build();
 	}
