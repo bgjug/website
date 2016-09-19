@@ -3,6 +3,7 @@ package bg.jug.website.cms.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,7 +21,8 @@ public class Page extends AbstractEntity {
 	private String title;
 	
 	@NotNull
-	@Size(min=1, max=1000)
+	@Size(min=1, max=100000)
+	@Column(length = 100000)
 	private String content;
 	
 // TODO for stage 2.
