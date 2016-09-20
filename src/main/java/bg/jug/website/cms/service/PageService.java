@@ -1,23 +1,17 @@
 package bg.jug.website.cms.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import bg.jug.website.cms.model.Page;
+import bg.jug.website.cms.repository.PageRepository;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import bg.jug.website.cms.model.Page;
-import bg.jug.website.cms.repository.PageRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Ivan St. Ivanov
@@ -81,8 +75,7 @@ public class PageService {
 		List<PageInfo> infoPages = allPages.stream()
 				.map(page -> new PageInfo(page.getId(), page.getTitle()))
 				.collect(Collectors.toList());
-
-		return Response.status(Response.Status.OK).entity(infoPages).build();
+		return Response.ok(new GenericEntity<List<PageInfo>>(infoPages) {}).build();
 	}
 
 	private Response savePageInternal(Page page) {
@@ -94,12 +87,15 @@ public class PageService {
 		return Response.status(status).entity(createdPage).build();
 	}
 
-	@XmlRootElement
+    @XmlRootElement
 	private static class PageInfo {
 		private Long id;
 		private String title;
 
-		public PageInfo(Long id, String title) {
+        public PageInfo() {
+        }
+
+        PageInfo(Long id, String title) {
 			super();
 			this.id = id;
 			this.title = title;

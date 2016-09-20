@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -84,7 +85,7 @@ public class ArticleService {
 				.map(article -> new ArticleInfo(article.getId(), article
 						.getTitle())).collect(Collectors.toList());
 
-		return Response.status(Response.Status.OK).entity(articleInfo).build();
+		return Response.ok(new GenericEntity<List<ArticleInfo>>(articleInfo){}).build();
 	}
 
 	private Response saveArticleInternal(Article article) {
@@ -102,7 +103,10 @@ public class ArticleService {
 		private Long id;
 		private String title;
 
-		public ArticleInfo(Long id, String title) {
+        public ArticleInfo() {
+        }
+
+        ArticleInfo(Long id, String title) {
 			super();
 			this.id = id;
 			this.title = title;
