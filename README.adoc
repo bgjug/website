@@ -5,3 +5,30 @@ image:https://badges.gitter.im/bgjug/website.svg[link="https://gitter.im/bgjug/w
 For tasks use the github issues.
 If someone wants a task please message your leader :
 Nayden (gochev@gmail.com), Ivan (ivan.st.ivanov@gmail.com), Martin(marto8808@gmail.com)
+
+= angular
+webui related stuff
+
+== Installation
+- install npm (`brew install npm`, `apt install npm`, `pacman -S npm`)
+- install angular-cli (`npm install -g angular-cli`) (update if you have an old version)
+
+We use https://github.com/eirslett/frontend-maven-plugin[eirslett's maven plugin] to build the front end.
+
+We use `mvn frontend:install-node-and-npm` to install project specific versions of npm and node. This is bound to `generate-resources` phase.
+
+IntelliJ 15 has mvn <3.1, we require >3.1. So install maven separately.
+
+
+
+== adding an angular component
+`cd src/main/angular/`
+
+`ng g component menu`
+
+== running the client only
+`cd src/main/angular/`
+
+`ng build`
+
+Open localhost:4200
