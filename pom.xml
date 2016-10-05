@@ -12,6 +12,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<ds.version>1.6.0</ds.version>
+§		<frontend.location>src/main/angular</frontend.location>
 	</properties>
 
 
@@ -92,9 +93,14 @@
             <version>2.22.2</version>
             <scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-servlet</artifactId>
+			<version>3.4.1.Final</version>
+		</dependency>
    	</dependencies>
 	<build>
-		<finalName>bgJugWebsite</finalName>
+		<finalName>ROOT</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -103,6 +109,7 @@
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
 				</configuration>
+				<version>3.3</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.openejb.maven</groupId>
@@ -112,6 +119,43 @@
 					<tomeeVersion>1.7.4</tomeeVersion>
 					<tomeeClassifier>plume</tomeeClassifier>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<workingDirectory>${frontend.location}</workingDirectory>
+					<!-- where to look for it -->
+					<installDirectory>target</installDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<nodeVersion>v6.5.0</nodeVersion>
+							<npmVersion>3.10.3</npmVersion>
+							<!-- where to install it -->
+							<installDirectory>target</installDirectory>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>ng build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
