@@ -30,10 +30,10 @@ public class PageServiceTest {
 	
 	@Before
 	public void setUp() {
-		
 		pageRepositoryMock = mock(PageRepository.class);
 		page = new Page();
 		page.setId(1L);
+        page.setContent("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
 		when(pageRepositoryMock.findBy(Long.parseLong("1"))).thenReturn(page);
 		pageService = new PageService(pageRepositoryMock);
 	}
@@ -134,7 +134,8 @@ public class PageServiceTest {
 		Page secondPage = new Page();
 		secondPage.setId(2L);
 		secondPage.setTitle("otherPage title");
-		when(pageRepositoryMock.findAll()).thenReturn(Arrays.asList(page, secondPage));
+        secondPage.setContent("Short");
+        when(pageRepositoryMock.findAll()).thenReturn(Arrays.asList(page, secondPage));
 		response = pageService.allPages();
 		allPages = (ArrayList<?>)response.getEntity();
 		
@@ -144,5 +145,4 @@ public class PageServiceTest {
 		assertEquals(page.getTitle(), result.get(0).getTitle());
 		assertEquals(secondPage.getTitle(), result.get(1).getTitle());
 	}
-	
 }

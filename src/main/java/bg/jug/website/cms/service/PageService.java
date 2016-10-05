@@ -1,10 +1,12 @@
 package bg.jug.website.cms.service;
 
+import bg.jug.website.cms.model.Article;
 import bg.jug.website.cms.model.Page;
 import bg.jug.website.cms.repository.PageRepository;
 
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -16,15 +18,18 @@ import java.util.stream.Collectors;
 /**
  * @author Ivan St. Ivanov
  */
-@Stateless
+@RequestScoped
 @Path("/page")
+@Produces(MediaType.APPLICATION_JSON)
 public class PageService {
 
-	@Inject
+    private static final int CONTENT_PREVIEW_LENGTH = 20;
+
+    @Inject
 	private PageRepository pageRepository;
 
-	public PageService() {
-	}
+    public PageService() {
+    }
 
 	public PageService(PageRepository pageRepository) {
 		this.pageRepository = pageRepository;
@@ -33,21 +38,19 @@ public class PageService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createPage(Page newPage) {
-
 		return savePageInternal(newPage);
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updatePage(Page page) {
-		
 		return savePageInternal(page);
 	}
 
 	@DELETE
 	@Path("/{id}")
+    @Transactional
 	public Response deletePage(@PathParam("id") String id) {
-
 		Page page = pageRepository.findBy(Long.parseLong(id));
 		if (page != null) {
 			pageRepository.remove(page);
@@ -59,7 +62,6 @@ public class PageService {
 	@GET
 	@Path("/{id}")
 	public Response findPage(@PathParam("id") String id) {
-
 		Page page = pageRepository.findBy(Long.parseLong(id));
 		if (page == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
@@ -70,16 +72,25 @@ public class PageService {
 
 	@GET
 	public Response allPages() {
-
 		List<Page> allPages = pageRepository.findAll();
 		List<PageInfo> infoPages = allPages.stream()
-				.map(page -> new PageInfo(page.getId(), page.getTitle()))
+                .filter(page -> !(page instanceof Article))
+				.map(page -> new PageInfo(page.getId(), page.getTitle(), stripContent(page.getContent())))
 				.collect(Collectors.toList());
-		return Response.ok(new GenericEntity<List<PageInfo>>(infoPages) {}).build();
+		return Response.ok(new GenericEntity<List<PageInfo>>(infoPages){}).build();
 	}
 
-	private Response savePageInternal(Page page) {
+    private String stripContent(String content) {
+	    if (content.length() > CONTENT_PREVIEW_LENGTH) {
+            return content.substring(0, CONTENT_PREVIEW_LENGTH);
+        }
+	    else {
+            return content;
+        }
+    }
 
+    @Transactional
+	private Response savePageInternal(Page page) {
 		boolean isPageExist = page.getId() != null && pageRepository.findBy(page.getId()) != null;
 		Response.Status status = isPageExist ? Response.Status.OK
 				: Response.Status.CREATED;
@@ -91,17 +102,18 @@ public class PageService {
 	public static class PageInfo {
 		private Long id;
 		private String title;
+		private String shortContent;
 
         public PageInfo() {
         }
 
-        PageInfo(Long id, String title) {
-			super();
-			this.id = id;
-			this.title = title;
-		}
+        public PageInfo(Long id, String title, String shortContent) {
+            this.id = id;
+            this.title = title;
+            this.shortContent = shortContent;
+        }
 
-		public Long getId() {
+        public Long getId() {
 			return id;
 		}
 
@@ -116,6 +128,14 @@ public class PageService {
 		public void setTitle(String title) {
 			this.title = title;
 		}
-	}
+
+        public String getShortContent() {
+            return shortContent;
+        }
+
+        public void setShortContent(String shortContent) {
+            this.shortContent = shortContent;
+        }
+    }
 
 }
