@@ -19,3 +19,4 @@ atlassian-ide-plugin.xml
 phantomjsdriver.log
 derby.log
 sun-appserv-samples/
+node-modules/
