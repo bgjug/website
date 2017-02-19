@@ -20,3 +20,4 @@ phantomjsdriver.log
 derby.log
 sun-appserv-samples/
 node-modules/
+src/main/frontend/node_modules/
