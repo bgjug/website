@@ -6,12 +6,12 @@ For tasks use the github issues.
 If someone wants a task please message your leader :
 Nayden (gochev@gmail.com), Ivan (ivan.st.ivanov@gmail.com), Martin(marto8808@gmail.com)
 
-= angular
+= react
 webui related stuff
 
 == Installation
 - install npm (`brew install npm`, `apt install npm`, `pacman -S npm`)
-- install angular-cli (`npm install -g angular-cli`) (update if you have an old version)
+- install npm install yarn (`npm install yarn`) 
 
 We use https://github.com/eirslett/frontend-maven-plugin[eirslett's maven plugin] to build the front end.
 
@@ -21,14 +21,10 @@ IntelliJ 15 has mvn <3.1, we require >3.1. So install maven separately.
 
 
 
-== adding an angular component
-`cd src/main/angular/`
+mvn clean install
 
-`ng g component menu`
+mvn tomee:run
 
-== running the client only
-`cd src/main/angular/`
+Open localhost:8080
 
-`ng build`
-
-Open localhost:4200
+You should see as hello world from a react component running on tomee.
