@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 let baseUrl = null;
 export default class ApiCall {
@@ -46,10 +46,7 @@ export default class ApiCall {
     let result = {
       'Content-Type': contentType || 'application/json'
     };
-    let nemesisToken = document.getElementById('token').getAttribute('value');
-    if (nemesisToken) {
-      result['X-Nemesis-Token'] = nemesisToken;
-    }
+
 
     return result;
   }
