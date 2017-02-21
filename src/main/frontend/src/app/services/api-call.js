@@ -36,7 +36,7 @@ export default class ApiCall {
 
   static getRestUrl() {
     if (!baseUrl) {
-      baseUrl = document.getElementById('rest-base-url').getAttribute('url');
+      baseUrl = "http://localhost:8080";
     }
 
     return baseUrl;
