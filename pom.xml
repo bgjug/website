@@ -128,7 +128,7 @@
 							<extension>.js</extension>
 							<extension>.css</extension>
 						</extensions>
-						<updateInterval>1</updateInterval>
+						<!--<updateInterval>1</updateInterval>-->
 					</synchronization>
 					 <reloadOnUpdate>true</reloadOnUpdate>
 				</configuration>
