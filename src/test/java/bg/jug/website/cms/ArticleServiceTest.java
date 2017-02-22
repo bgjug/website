@@ -42,7 +42,7 @@ public class ArticleServiceTest {
 	}
 
 	@Test
-	public void testCreateArticle() {
+	public void testCreateNonexistingArticle() {
 
 		Article newArticle = new Article();
 		response = articleService.createArticle(newArticle);
@@ -50,6 +50,10 @@ public class ArticleServiceTest {
 		verify(articleRepositoryMock).save(newArticle);
 		assertEquals(response.getStatus(),
 				Response.Status.CREATED.getStatusCode());
+	}
+
+	@Test
+	public void testCreateExistingArticle() {
 
 		response = articleService.createArticle(article);
 
@@ -58,7 +62,7 @@ public class ArticleServiceTest {
 	}
 
 	@Test
-	public void testUpdateArticle() {
+	public void testUpdateExistingArticle() {
 
 		article.setTitle("TITLE");
 		Article updatedArticle = new Article();
@@ -73,6 +77,11 @@ public class ArticleServiceTest {
 		Article result = (Article) response.getEntity();
 		assertEquals(result.getTitle(), "title");
 		assertTrue(result.getId() == 1L);
+	}
+
+
+	@Test
+	public void testUpdateNonexistingArticle() {
 		
 		Article newArticle = new Article();
 		newArticle.setId(3L);
@@ -82,7 +91,7 @@ public class ArticleServiceTest {
 	}
 
 	@Test
-	public void testDeleteArticle() {
+	public void testDeleteNonxistingArticle() {
 
 		response = articleService.deleteArticle("2");
 
@@ -90,6 +99,10 @@ public class ArticleServiceTest {
 				Response.Status.NO_CONTENT.getStatusCode());
 		verify(articleRepositoryMock, never()).remove(article);
 
+	}
+	
+	@Test
+	public void testDeleteExistingArticle() {
 		response = articleService.deleteArticle("1");
 
 		assertEquals(response.getStatus(),
@@ -98,12 +111,16 @@ public class ArticleServiceTest {
 	}
 
 	@Test
-	public void testFindArticle() {
+	public void testFindNonexistingArticle() {
 
 		response = articleService.findArticle("2");
 
 		assertEquals(response.getStatus(),
 				Response.Status.NOT_FOUND.getStatusCode());
+	}
+
+	@Test
+	public void testFindEexistingArticle() {
 
 		response = articleService.findArticle("1");
 
@@ -111,7 +128,7 @@ public class ArticleServiceTest {
 	}
 
 	@Test
-	public void testAllPages() {
+	public void testAllArticles() {
 
 		response = articleService.allArticles();
 		ArrayList<?> allArticles = (ArrayList<?>) response.getEntity();

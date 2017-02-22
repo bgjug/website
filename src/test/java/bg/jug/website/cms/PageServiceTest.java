@@ -28,8 +28,8 @@ public class PageServiceTest {
 	private Page page;
 	
 	@Before
-	public void setUp()
-	{
+	public void setUp() {
+		
 		pageRepositoryMock = mock(PageRepository.class);
 		page = new Page();
 		page.setId(1L);
@@ -38,13 +38,18 @@ public class PageServiceTest {
 	}
 	
 	@Test
-	public void testCreatePage() {
+	public void testCreateNonexistingPage() {
 
 		Page newPage = new Page();
 		response = pageService.createPage(newPage);
 
 		verify(pageRepositoryMock).save(newPage);
 		assertEquals(response.getStatus(), Response.Status.CREATED.getStatusCode());
+	}
+
+	
+	@Test
+	public void testCreateExistingPage() {
 		
 		response = pageService.createPage(page);
 		
@@ -53,7 +58,7 @@ public class PageServiceTest {
 	}
 
 	@Test
-	public void testUpdatePage(){
+	public void testUpdateExistingPage() {
 		
 		page.setTitle("TITLE");
 		Page updatedPage = new Page();
@@ -68,6 +73,11 @@ public class PageServiceTest {
 		Page result = (Page) response.getEntity();
 		assertEquals(result.getTitle(), "title");
 		assertTrue(result.getId() == 1L);
+	}
+
+
+	@Test
+	public void testUpdateNonexistingPage() {
 		
 		Page newPage = new Page();
 		newPage.setId(3L);
@@ -77,13 +87,17 @@ public class PageServiceTest {
 	}
 
 	@Test
-	public void testDeletePage(){
+	public void testDeleteNonexistingPage() {
 		
 		response = pageService.deletePage("2");
 		
 		assertEquals(response.getStatus(), Response.Status.NO_CONTENT.getStatusCode());
 		verify(pageRepositoryMock, never()).remove(page);
+	}
 
+
+	@Test
+	public void testDeleteExistingPage() {
 		response = pageService.deletePage("1");
 		
 		assertEquals(response.getStatus(), Response.Status.NO_CONTENT.getStatusCode());
@@ -91,11 +105,16 @@ public class PageServiceTest {
 	}
 	
 	@Test
-	public void testFindPage(){
+	public void testFindNonexistingPage() {
 		
 		response = pageService.findPage("2");
 		
 		assertEquals(response.getStatus(), Response.Status.NOT_FOUND.getStatusCode());
+	}
+
+	
+	@Test
+	public void testFindExistingPage() {
 		
 		response = pageService.findPage("1");
 		
@@ -103,7 +122,7 @@ public class PageServiceTest {
 	}
 	
 	@Test
-	public void testAllPages(){
+	public void testAllPages() {
 		
 		response = pageService.allPages();
 		ArrayList<?> allPages = (ArrayList<?>)response.getEntity();
