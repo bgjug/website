@@ -1,7 +1,6 @@
 package bg.jug.website.cms;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -44,7 +43,7 @@ public class PageServiceTest {
 		response = pageService.createPage(newPage);
 
 		verify(pageRepositoryMock).save(newPage);
-		assertEquals(response.getStatus(), Response.Status.CREATED.getStatusCode());
+		assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
 	}
 
 	
@@ -54,7 +53,7 @@ public class PageServiceTest {
 		response = pageService.createPage(page);
 		
 		verify(pageRepositoryMock, atLeastOnce()).save(page);
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 
 	@Test
@@ -69,10 +68,10 @@ public class PageServiceTest {
 		response = pageService.updatePage(page);
 		
 		verify(pageRepositoryMock).save(page);
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 		Page result = (Page) response.getEntity();
-		assertEquals(result.getTitle(), "title");
-		assertTrue(result.getId() == 1L);
+		assertEquals("title", result.getTitle());
+		assertEquals(1L, result.getId().longValue());
 	}
 
 
@@ -83,7 +82,7 @@ public class PageServiceTest {
 		newPage.setId(3L);
 		
 		response = pageService.updatePage(newPage);
-		assertEquals(response.getStatus(), Response.Status.CREATED.getStatusCode());
+		assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
 	}
 
 	@Test
@@ -91,7 +90,7 @@ public class PageServiceTest {
 		
 		response = pageService.deletePage("2");
 		
-		assertEquals(response.getStatus(), Response.Status.NO_CONTENT.getStatusCode());
+		assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
 		verify(pageRepositoryMock, never()).remove(page);
 	}
 
@@ -100,7 +99,7 @@ public class PageServiceTest {
 	public void testDeleteExistingPage() {
 		response = pageService.deletePage("1");
 		
-		assertEquals(response.getStatus(), Response.Status.NO_CONTENT.getStatusCode());
+		assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
 		verify(pageRepositoryMock).remove(page);
 	}
 	
@@ -109,7 +108,7 @@ public class PageServiceTest {
 		
 		response = pageService.findPage("2");
 		
-		assertEquals(response.getStatus(), Response.Status.NOT_FOUND.getStatusCode());
+		assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
 	}
 
 	
@@ -118,7 +117,7 @@ public class PageServiceTest {
 		
 		response = pageService.findPage("1");
 		
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 	
 	@Test
@@ -127,8 +126,8 @@ public class PageServiceTest {
 		response = pageService.allPages();
 		ArrayList<?> allPages = (ArrayList<?>)response.getEntity();
 		
-		assertEquals(allPages.size(), 0);
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(0, allPages.size());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 		
 		Page secondPage = new Page();
 		secondPage.setId(2L);
@@ -136,8 +135,8 @@ public class PageServiceTest {
 		response = pageService.allPages();
 		allPages = (ArrayList<?>)response.getEntity();
 		
-		assertEquals(allPages.size(), 2);
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(2, allPages.size());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 	
 }

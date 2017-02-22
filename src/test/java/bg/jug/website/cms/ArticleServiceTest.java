@@ -1,7 +1,6 @@
 package bg.jug.website.cms;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -48,8 +47,7 @@ public class ArticleServiceTest {
 		response = articleService.createArticle(newArticle);
 
 		verify(articleRepositoryMock).save(newArticle);
-		assertEquals(response.getStatus(),
-				Response.Status.CREATED.getStatusCode());
+		assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
 	}
 
 	@Test
@@ -58,7 +56,7 @@ public class ArticleServiceTest {
 		response = articleService.createArticle(article);
 
 		verify(articleRepositoryMock, atLeastOnce()).save(article);
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 
 	@Test
@@ -73,10 +71,10 @@ public class ArticleServiceTest {
 		response = articleService.updateArticle(article);
 		
 		verify(articleRepositoryMock).save(article);
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 		Article result = (Article) response.getEntity();
-		assertEquals(result.getTitle(), "title");
-		assertTrue(result.getId() == 1L);
+		assertEquals("title", result.getTitle());
+		assertEquals(1L, result.getId().longValue());
 	}
 
 
@@ -87,7 +85,7 @@ public class ArticleServiceTest {
 		newArticle.setId(3L);
 		
 		response = articleService.updateArticle(newArticle);
-		assertEquals(response.getStatus(), Response.Status.CREATED.getStatusCode());
+		assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
 	}
 
 	@Test
@@ -95,8 +93,7 @@ public class ArticleServiceTest {
 
 		response = articleService.deleteArticle("2");
 
-		assertEquals(response.getStatus(),
-				Response.Status.NO_CONTENT.getStatusCode());
+		assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
 		verify(articleRepositoryMock, never()).remove(article);
 
 	}
@@ -105,8 +102,7 @@ public class ArticleServiceTest {
 	public void testDeleteExistingArticle() {
 		response = articleService.deleteArticle("1");
 
-		assertEquals(response.getStatus(),
-				Response.Status.NO_CONTENT.getStatusCode());
+		assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
 		verify(articleRepositoryMock).remove(article);
 	}
 
@@ -115,8 +111,7 @@ public class ArticleServiceTest {
 
 		response = articleService.findArticle("2");
 
-		assertEquals(response.getStatus(),
-				Response.Status.NOT_FOUND.getStatusCode());
+		assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
 	}
 
 	@Test
@@ -124,7 +119,7 @@ public class ArticleServiceTest {
 
 		response = articleService.findArticle("1");
 
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 	}
 
 	@Test
@@ -133,8 +128,8 @@ public class ArticleServiceTest {
 		response = articleService.allArticles();
 		ArrayList<?> allArticles = (ArrayList<?>) response.getEntity();
 
-		assertEquals(allArticles.size(), 0);
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(0, allArticles.size());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
 		Article secondArticle = new Article();
 		secondArticle.setId(2L);
@@ -144,14 +139,14 @@ public class ArticleServiceTest {
 		response = articleService.allArticles();
 		allArticles = (ArrayList<?>) response.getEntity();
 
-		assertEquals(allArticles.size(), 2);
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		assertEquals(2, allArticles.size());
+		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
 		ArticleInfo firstArticleInfo = (ArticleInfo) allArticles.get(0);
 		ArticleInfo secondArticleInfo = (ArticleInfo) allArticles.get(1);
 
-		assertEquals(firstArticleInfo.getId().longValue(), 2L);
-		assertEquals(secondArticleInfo.getId().longValue(), 1L);
+		assertEquals(2L, firstArticleInfo.getId().longValue());
+		assertEquals(1L, secondArticleInfo.getId().longValue());
 	}
 
 }
