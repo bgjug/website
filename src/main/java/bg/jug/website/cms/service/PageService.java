@@ -88,7 +88,7 @@ public class PageService {
 	}
 
     @XmlRootElement
-	private static class PageInfo {
+	public static class PageInfo {
 		private Long id;
 		private String title;
 

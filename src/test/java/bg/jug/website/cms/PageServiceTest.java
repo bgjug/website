@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -18,6 +19,7 @@ import org.junit.Test;
 import bg.jug.website.cms.model.Page;
 import bg.jug.website.cms.repository.PageRepository;
 import bg.jug.website.cms.service.PageService;
+import bg.jug.website.cms.service.PageService.PageInfo;
 
 public class PageServiceTest {
 
@@ -131,12 +133,16 @@ public class PageServiceTest {
 		
 		Page secondPage = new Page();
 		secondPage.setId(2L);
+		secondPage.setTitle("otherPage title");
 		when(pageRepositoryMock.findAll()).thenReturn(Arrays.asList(page, secondPage));
 		response = pageService.allPages();
 		allPages = (ArrayList<?>)response.getEntity();
 		
 		assertEquals(2, allPages.size());
 		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+		List<PageInfo> result = (List<PageInfo>) response.getEntity();
+		assertEquals(page.getTitle(), result.get(0).getTitle());
+		assertEquals(secondPage.getTitle(), result.get(1).getTitle());
 	}
 	
 }
