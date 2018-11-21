@@ -67,6 +67,8 @@ public class ArticleService {
 
 	@GET
 	public Response allArticles() {
+    	// FIXME sort the articles in DB
+		// FIXME pagination
 		List<Article> allArticles = articleRepository.findAll();
 		allArticles.sort((article1, article2) -> article2.getCreatedDate()
 				.compareTo(article1.getCreatedDate()));

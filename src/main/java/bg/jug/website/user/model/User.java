@@ -1,19 +1,14 @@
 package bg.jug.website.user.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import bg.jug.website.core.model.AbstractEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import bg.jug.website.cms.model.Article;
-import bg.jug.website.core.model.AbstractEntity;
-
 @Entity
-public class User extends AbstractEntity{
+public class User extends AbstractEntity {
 	
 	private String nickname;
 
@@ -33,9 +28,6 @@ public class User extends AbstractEntity{
 	
 	@NotNull
 	private String password;
-	
-	@OneToMany(mappedBy = "author")
-	private Set<Article> articles = new HashSet<>();
 	
 	public String getNickname() {
 		return nickname;

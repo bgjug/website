@@ -1,4 +1,4 @@
-package bg.jug.website.producer;
+package bg.jug.website.core;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
