@@ -1,19 +1,17 @@
 package bg.jug.website.cms.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import bg.jug.website.cms.model.Article;
+import bg.jug.website.cms.repository.ArticleRepository;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
-import bg.jug.website.cms.model.Article;
-import bg.jug.website.cms.repository.ArticleRepository;
+import static bg.jug.website.core.util.PagingUtils.findPageStartingElement;
 
 @RequestScoped
 @Path("/article")
@@ -57,7 +55,7 @@ public class ArticleService {
 	@GET
 	@Path("/{id}")
 	public Response findArticle(@PathParam("id") String id) {
-		Article article = articleRepository.findBy(Long.parseLong(id));
+		Article article = articleRepository.findById(Long.parseLong(id));
 		if (article == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
@@ -66,19 +64,10 @@ public class ArticleService {
 	}
 
 	@GET
-	public Response allArticles() {
-    	// FIXME sort the articles in DB
-		// FIXME pagination
-		List<Article> allArticles = articleRepository.findAll();
-		allArticles.sort((article1, article2) -> article2.getCreatedDate()
-				.compareTo(article1.getCreatedDate()));
-
-		List<ArticleInfo> articleInfo = allArticles
-				.stream()
-				.map(article -> new ArticleInfo(article.getId(), article
-						.getTitle())).collect(Collectors.toList());
-
-		return Response.ok(new GenericEntity<List<ArticleInfo>>(articleInfo){}).build();
+	public Response allArticles(@DefaultValue("1") @QueryParam("page") int page,
+								@DefaultValue("10") @QueryParam("size") int size) {
+		List<Article> allArticles = articleRepository.findAll(findPageStartingElement(page, size), size);
+		return Response.ok(allArticles).build();
 	}
 
 	@Transactional
@@ -90,36 +79,5 @@ public class ArticleService {
 		return Response.status(status).entity(createdArticle).build();
 	}
 
-	@XmlRootElement
-	public static class ArticleInfo {
-
-		private Long id;
-		private String title;
-
-        public ArticleInfo() {
-        }
-
-        ArticleInfo(Long id, String title) {
-			super();
-			this.id = id;
-			this.title = title;
-		}
-
-		public Long getId() {
-			return id;
-		}
-
-		public void setId(Long id) {
-			this.id = id;
-		}
-
-		public String getTitle() {
-			return title;
-		}
-
-		public void setTitle(String title) {
-			this.title = title;
-		}
-	}
 
 }
