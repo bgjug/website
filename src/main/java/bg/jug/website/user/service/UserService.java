@@ -46,8 +46,9 @@ public class UserService {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/login")
     public Response loginUser(LoginDetails loginDetails) {
-        User user = userRepository.findByEmail(loginDetails.getEmail());
+        User user = userRepository.findOptionalByEmail(loginDetails.getEmail());
         if (user == null) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -66,7 +67,7 @@ public class UserService {
     @RolesAllowed("admin")
     @Transactional
     public Response addRoles(RoleUpdate newRoles) {
-        User user = userRepository.findByEmail(newRoles.getEmail());
+        User user = userRepository.findOptionalByEmail(newRoles.getEmail());
         if (user == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

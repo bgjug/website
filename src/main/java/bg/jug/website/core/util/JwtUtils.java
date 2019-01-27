@@ -7,6 +7,7 @@ import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import net.minidev.json.JSONObject;
+import org.eclipse.microprofile.jwt.Claims;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -33,15 +34,15 @@ public class JwtUtils {
     public String generateJWT(String email, List<String> roles, int expiresInSeconds) {
         JSONObject claims = new JSONObject();
 
-        claims.put("iss", "https://jug.bg");
-        claims.put("upn", email);
-        claims.put("sub", email);
+        claims.put(Claims.iss.name(), "https://jug.bg");
+        claims.put(Claims.upn.name(), email);
+        claims.put(Claims.sub.name(), email);
 
         long currentTimeInSeconds = System.currentTimeMillis() / 1000;
-        claims.put("iat", currentTimeInSeconds);
-        claims.put("exp", currentTimeInSeconds + expiresInSeconds);
-        claims.put("auth_time", currentTimeInSeconds);
-        claims.put("roles", roles);
+        claims.put(Claims.iat.name(), currentTimeInSeconds);
+        claims.put(Claims.exp.name(), currentTimeInSeconds + expiresInSeconds);
+        claims.put(Claims.auth_time.name(), currentTimeInSeconds);
+        claims.put(Claims.groups.name(), roles);
 
         JWSHeader header = new JWSHeader.Builder(JWSAlgorithm.RS256)
                 .keyID("BGJUG")

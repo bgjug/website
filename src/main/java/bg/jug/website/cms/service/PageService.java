@@ -34,6 +34,7 @@ public class PageService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Transactional
 	@RolesAllowed("admin")
 	public Response createPage(Page newPage) {
 		return savePageInternal(newPage);
@@ -41,6 +42,7 @@ public class PageService {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Transactional
 	@RolesAllowed("admin")
 	public Response updatePage(Page page) {
 		return savePageInternal(page);

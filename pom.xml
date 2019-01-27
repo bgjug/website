@@ -56,6 +56,13 @@
 			<artifactId>nimbus-jose-jwt</artifactId>
 			<version>4.23</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.tomee</groupId>
+			<artifactId>mp-jwt</artifactId>
+			<version>${tomee-maven-plugin.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.apache.deltaspike.modules</groupId>
