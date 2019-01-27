@@ -14,6 +14,7 @@
 
 		<tomee-maven-plugin.version>8.0.0-M1</tomee-maven-plugin.version>
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+		<eclipselink.version>2.7.4</eclipselink.version>
 		<ds.version>1.6.1</ds.version>
 		<h2.version>1.4.197</h2.version>
 		<rewrite-servlet.version>3.4.1.Final</rewrite-servlet.version>
@@ -113,9 +114,14 @@
 					<systemVariables>
 						<openejb.system.apps>true</openejb.system.apps>
 						<tomee.serialization.class.blacklist>-</tomee.serialization.class.blacklist>
+						<javax.persistence.provider>org.eclipse.persistence.jpa.PersistenceProvider</javax.persistence.provider>
 					</systemVariables>
+					<libs>
+						<lib>remove:openjpa-</lib>
+						<lib>org.eclipse.persistence:eclipselink:${eclipselink.version}</lib>
+					</libs>
 					<tomeeVersion>${tomee-maven-plugin.version}</tomeeVersion>
-					<tomeeClassifier>plume</tomeeClassifier>
+					<tomeeClassifier>microprofile</tomeeClassifier>
 					<synchronization>
 						<extensions>
 							<extension>.class</extension> <!-- if you want to update each time you build with mvn compile -->
