@@ -48,6 +48,7 @@ public class TestJaxRS {
         nayden.setFullname("Nayden Gochev");
         nayden.setEmail("nayden@example.org");
         nayden.setPassword("supersecret");
+        nayden.setSalt("");
         userRepository.save(nayden);
 
         Article myFirst = new Article();
@@ -57,6 +58,13 @@ public class TestJaxRS {
         myFirst.setCreatedDate(new Date());
         myFirst.setAuthor(nayden);
         articleRepository.save(myFirst);
+
+        User admin = new User();
+        admin.setFullname("Dmitry Alexandrov");
+        admin.setEmail("mitya@example.org");
+        admin.setPassword("supersecret");
+        admin.setSalt("");
+        userRepository.save(admin);
 
         return pageRepository.findAll();
     }

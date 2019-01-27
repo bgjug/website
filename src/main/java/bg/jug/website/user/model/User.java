@@ -2,33 +2,57 @@ package bg.jug.website.user.model;
 
 import bg.jug.website.core.model.AbstractEntity;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 public class User extends AbstractEntity {
+
+	private final static String DEFAULT_ROLE = "reader";
 	
 	private String nickname;
 
-	@NotNull
-	@Size(min = 1, max = 500)
 	private String fullname;
 	
-	@Size(min = 1, max = 500)
-	@NotNull
 	private String email;
 	
 	@Lob
 	private byte[] photo;
 	
-	@Size(min = 1, max = 1000)
 	private String bio;
 	
-	@NotNull
 	private String password;
-	
+
+	private String salt;
+
+	@ElementCollection
+	private List<String> roles;
+
+	public User() {
+	}
+
+	public User(String email, String password, String salt) {
+		this(null, null, email, null, null, password, salt,
+				Collections.singletonList(DEFAULT_ROLE));
+	}
+
+	public User(String nickname, String fullname, String email, byte[] photo,
+				String bio, String password, String salt, List<String> roles) {
+		this.nickname = nickname;
+		this.fullname = fullname;
+		this.email = email;
+		this.photo = photo;
+		this.bio = bio;
+		this.password = password;
+		this.salt = salt;
+		this.roles = roles;
+	}
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -64,5 +88,17 @@ public class User extends AbstractEntity {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getSalt() {
+		return salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+	public List<String> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 }

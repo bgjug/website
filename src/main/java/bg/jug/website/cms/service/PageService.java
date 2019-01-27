@@ -3,6 +3,7 @@ package bg.jug.website.cms.service;
 import bg.jug.website.cms.model.Page;
 import bg.jug.website.cms.repository.PageRepository;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -33,12 +34,14 @@ public class PageService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed("admin")
 	public Response createPage(Page newPage) {
 		return savePageInternal(newPage);
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed("admin")
 	public Response updatePage(Page page) {
 		return savePageInternal(page);
 	}
@@ -46,6 +49,7 @@ public class PageService {
 	@DELETE
 	@Path("/{id}")
     @Transactional
+	@RolesAllowed("admin")
 	public Response deletePage(@PathParam("id") String id) {
 		Page page = pageRepository.findBy(Long.parseLong(id));
 		if (page != null) {

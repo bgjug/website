@@ -8,4 +8,6 @@ import bg.jug.website.user.model.User;
 
 @Repository
 public interface UserRepository extends EntityRepository<User, Long> {
+
+    User findByEmail(String email);
 }
