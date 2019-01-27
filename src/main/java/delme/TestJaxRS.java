@@ -1,5 +1,6 @@
 package delme;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import bg.jug.website.cms.model.Article;
 import bg.jug.website.cms.model.Page;
 import bg.jug.website.cms.repository.ArticleRepository;
 import bg.jug.website.cms.repository.PageRepository;
+import bg.jug.website.core.util.CryptUtils;
 import bg.jug.website.user.model.User;
 import bg.jug.website.user.repository.UserRepository;
 
@@ -47,7 +49,8 @@ public class TestJaxRS {
         User nayden = new User();
         nayden.setFullname("Nayden Gochev");
         nayden.setEmail("nayden@example.org");
-        nayden.setPassword("supersecret");
+        nayden.setPassword(CryptUtils.encryptPassword("supersecret"));
+        nayden.setSalt("");
         userRepository.save(nayden);
 
         Article myFirst = new Article();
@@ -57,6 +60,14 @@ public class TestJaxRS {
         myFirst.setCreatedDate(new Date());
         myFirst.setAuthor(nayden);
         articleRepository.save(myFirst);
+
+        User admin = new User();
+        admin.setFullname("Dmitry Alexandrov");
+        admin.setEmail("mitya@example.org");
+        admin.setPassword(CryptUtils.encryptPassword("supersecret"));
+        admin.setSalt("");
+        admin.setRoles(Collections.singletonList("admin"));
+        userRepository.save(admin);
 
         return pageRepository.findAll();
     }

@@ -2,45 +2,79 @@ package bg.jug.website.cms.model;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.Size;
 
+import bg.jug.website.core.model.AbstractEntity;
 import bg.jug.website.user.model.User;
 
 @Entity
-@XmlRootElement
-public class Article extends Page {
+@NamedQuery(name = Article.FIND_ALL, query = "SELECT a FROM Article a JOIN FETCH a.author ORDER BY a.createdDate DESC")
+@NamedQuery(name = Article.FIND_BY_ID, query = "SELECT a FROM Article a JOIN FETCH a.author WHERE a.id = ?1")
+public class Article extends AbstractEntity {
 
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
+    public static final String FIND_ALL = "findAllArticles";
+    public static final String FIND_BY_ID = "findArticleById";
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "AUTHOR_ID")
-	private User author;
+    @NotNull
+    @Size(min=1, max=150)
+    private String title;
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    @NotNull
+    @Size(min=1, max=100000)
+    @Column(length = 100000)
+    private String content;
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    private boolean published = false;
 
-	public User getAuthor() {
-		return author;
-	}
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
 
-	public void setAuthor(User author) {
-		this.author = author;
-	}
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "AUTHOR_ID")
+    private User author;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
 }

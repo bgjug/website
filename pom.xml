@@ -8,58 +8,62 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<properties>
-		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<ds.version>1.8.0</ds.version>
-		<frontend-plugin.version>1.6</frontend-plugin.version>
-        <node.version>v8.9.1</node.version>
-        <yarn.version>v1.3.2</yarn.version>
-		<tomee-maven-plugin.version>7.0.4</tomee-maven-plugin.version>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+
+		<tomee-maven-plugin.version>8.0.0-M1</tomee-maven-plugin.version>
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+		<eclipselink.version>2.7.4</eclipselink.version>
+		<ds.version>1.6.1</ds.version>
+		<h2.version>1.4.197</h2.version>
+		<rewrite-servlet.version>3.4.1.Final</rewrite-servlet.version>
+		<apache-commons.version>2.6</apache-commons.version>
+
+		<microprofile.config.version>1.3</microprofile.config.version>
+		<microprofile.jwt.version>1.1</microprofile.jwt.version>
+
+		<frontend-plugin.version>1.6</frontend-plugin.version>
+		<node.version>v8.9.1</node.version>
+		<yarn.version>v1.3.2</yarn.version>
+
 		<junit.version>4.8.1</junit.version>
 		<mockito-all.version>1.10.19</mockito-all.version>
-		<jersey-common.version>2.22.2</jersey-common.version>
-		<rewrite-servlet.artifactId>rewrite-servlet</rewrite-servlet.artifactId>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
+			<version>8.0</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-			<version>2.1</version>
+			<groupId>org.eclipse.microprofile.config</groupId>
+			<artifactId>microprofile-config-api</artifactId>
+			<version>${microprofile.config.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.microprofile.jwt</groupId>
+			<artifactId>microprofile-jwt-auth-api</artifactId>
+			<version>${microprofile.jwt.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>4.23</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomee</groupId>
+			<artifactId>mp-jwt</artifactId>
+			<version>${tomee-maven-plugin.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.deltaspike.core</groupId>
-			<artifactId>deltaspike-core-api</artifactId>
-			<version>${ds.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.deltaspike.core</groupId>
-			<artifactId>deltaspike-core-impl</artifactId>
-			<version>${ds.version}</version>
-			<scope>runtime</scope>
-		</dependency>
 
-		<dependency>
-			<groupId>org.apache.deltaspike.modules</groupId>
-			<artifactId>deltaspike-jpa-module-api</artifactId>
-			<version>${ds.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.deltaspike.modules</groupId>
-			<artifactId>deltaspike-jpa-module-impl</artifactId>
-			<version>${ds.version}</version>
-			<scope>runtime</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.deltaspike.modules</groupId>
 			<artifactId>deltaspike-data-module-api</artifactId>
@@ -71,15 +75,24 @@
 			<version>${ds.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>org.apache.deltaspike.modules</groupId>
-			<artifactId>deltaspike-bean-validation-module-impl</artifactId>
-			<version>${ds.version}</version>
-			<scope>runtime</scope>
-   		</dependency>
-   
-   
-        <!-- test dependencies -->
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-servlet</artifactId>
+			<version>${rewrite-servlet.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${apache-commons.version}</version>
+		</dependency>
+
+		<!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -92,17 +105,6 @@
             <version>${mockito-all.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-common</artifactId>
-            <version>${jersey-common.version}</version>
-            <scope>test</scope>
-        </dependency>
-		<dependency>
-			<groupId>org.ocpsoft.rewrite</groupId>
-			<artifactId>${rewrite-servlet.artifactId}</artifactId>
-			<version>3.4.1.Final</version>
-		</dependency>
    	</dependencies>
 	<build>
 		<finalName>ROOT</finalName>
@@ -122,11 +124,16 @@
 				<version>${tomee-maven-plugin.version}</version>
 				<configuration>
 					<systemVariables>
-					        <openejb.system.apps>true</openejb.system.apps>
-					        <tomee.serialization.class.blacklist>-</tomee.serialization.class.blacklist>
-					</systemVariables> 
+						<openejb.system.apps>true</openejb.system.apps>
+						<tomee.serialization.class.blacklist>-</tomee.serialization.class.blacklist>
+						<javax.persistence.provider>org.eclipse.persistence.jpa.PersistenceProvider</javax.persistence.provider>
+					</systemVariables>
+					<libs>
+						<lib>remove:openjpa-</lib>
+						<lib>org.eclipse.persistence:eclipselink:${eclipselink.version}</lib>
+					</libs>
 					<tomeeVersion>${tomee-maven-plugin.version}</tomeeVersion>
-					<tomeeClassifier>plume</tomeeClassifier>
+					<tomeeClassifier>microprofile</tomeeClassifier>
 					<synchronization>
 						<extensions>
 							<extension>.class</extension> <!-- if you want to update each time you build with mvn compile -->
@@ -136,7 +143,7 @@
 						</extensions>
 						<!--<updateInterval>1</updateInterval>-->
 					</synchronization>
-					 <reloadOnUpdate>true</reloadOnUpdate>
+					<reloadOnUpdate>true</reloadOnUpdate>
 				</configuration>
 			</plugin>
 			<plugin>

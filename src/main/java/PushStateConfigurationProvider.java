@@ -15,6 +15,7 @@ import javax.servlet.ServletContext;
  */
 @RewriteConfiguration
 public class PushStateConfigurationProvider extends HttpConfigurationProvider {
+
     @Override
     public Configuration getConfiguration(final ServletContext context) {
         return ConfigurationBuilder.begin()

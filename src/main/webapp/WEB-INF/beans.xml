@@ -1,5 +1,0 @@
-<beans>
-    <alternatives>
-        <class>org.apache.deltaspike.jpa.impl.transaction.ContainerManagedTransactionStrategy</class>
-    </alternatives>
-</beans>

@@ -7,6 +7,7 @@ import bg.jug.website.cms.model.Page;
 import bg.jug.website.user.model.User;
 
 @Repository
-public interface UserRepository extends EntityRepository<User, Long>
-{
+public interface UserRepository extends EntityRepository<User, Long> {
+
+    User findOptionalByEmail(String email);
 }

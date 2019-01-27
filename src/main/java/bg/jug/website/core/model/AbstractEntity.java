@@ -1,17 +1,16 @@
 package bg.jug.website.core.model;
 
-import javax.annotation.Generated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class AbstractEntity{
+public abstract class AbstractEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
+
+	@Version
+	private Integer version;
 
 	public Long getId() {
 		return id;
@@ -21,8 +20,5 @@ public abstract class AbstractEntity{
 		this.id = id;
 	}
 	
-	
-
-
 }
 
