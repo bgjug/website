@@ -2,6 +2,7 @@ package bg.jug.website.user.model;
 
 import bg.jug.website.core.model.AbstractEntity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -18,19 +19,25 @@ public class User extends AbstractEntity {
 	private String nickname;
 
 	private String fullname;
-	
+
+	@JsonbTransient
 	private String email;
 	
 	@Lob
+	@JsonbTransient
 	private byte[] photo;
-	
+
+	@JsonbTransient
 	private String bio;
-	
+
+	@JsonbTransient
 	private String password;
 
+	@JsonbTransient
 	private String salt;
 
 	@ElementCollection
+	@JsonbTransient
 	private List<String> roles;
 
 	public User() {
