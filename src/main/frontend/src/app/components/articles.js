@@ -11,16 +11,16 @@ export default class Articles extends Component {
     componentWillMount(){
 
         let articles = ApiCall.get("/api/article")
-            .then((response) => this.setState({articles: response.data.articleInfo}));
+            .then((response) => this.setState({articles: response.data}));
+
     }
 
     render() {
         let container = [];
 
-
         for(let i=0;i<this.state.articles.length;i++){
             container.push(
-                (<Article key={i} article={this.state.articles[i]}></Article>)
+                (<Article key={i} article={this.state.articles[i]} isUnique={this.state.articles.length === 1}></Article>)
             );
         }
 

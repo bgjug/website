@@ -6,6 +6,19 @@ export default class Article extends Component {
     }
 
     render() {
+        let readmore = "";
+        if(!this.props.isUnique) {
+            readmore = (
+                <div className='entry-more'>
+                    <div className='pull-left'>
+                        <a href='single.html' className='btn btn-common'>Read More <i className='ico-arrow-right'/></a>
+                    </div>
+                    <div className='share-icon pull-right'>
+                        <span className='socialShare'/>
+                    </div>
+                </div>);
+        }
+
         return (
             <article>
                 <div className='blog-item-wrap'>
@@ -22,17 +35,10 @@ export default class Article extends Component {
                     </div>
                     <div className='post-content'>
                         <p>
-                            {this.props.article.shortContent || "N/A"}
+                            {this.props.article.content || "N/A"}
                         </p>
                     </div>
-                    <div className='entry-more'>
-                        <div className='pull-left'>
-                            <a href='single.html' className='btn btn-common'>Read More <i className='ico-arrow-right'/></a>
-                        </div>
-                        <div className='share-icon pull-right'>
-                            <span className='socialShare'/>
-                        </div>
-                    </div>
+                    {readmore}
                 </div>
             </article>
         );
