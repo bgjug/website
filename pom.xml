@@ -12,7 +12,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 
-		<tomee-maven-plugin.version>8.0.0-M1</tomee-maven-plugin.version>
+		<tomee-maven-plugin.version>8.0.0-M2</tomee-maven-plugin.version>
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 		<eclipselink.version>2.7.4</eclipselink.version>
 		<ds.version>1.6.1</ds.version>
