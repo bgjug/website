@@ -1,14 +1,28 @@
 package bg.jug.website.taxonomy.model;
 
+import bg.jug.website.cms.model.Article;
+import bg.jug.website.cms.model.Page;
+import bg.jug.website.core.model.AbstractEntity;
+
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-import bg.jug.website.cms.model.Page;
+@Entity
+public class Tag extends AbstractEntity {
 
-public class Tag {
+	@NotNull
+	@Size(min=1, max=255)
 	private String name;
-	
+
+	@ManyToMany(mappedBy = "tags")
 	private Set<Page> pages = new HashSet<>();
+
+	@ManyToMany(mappedBy = "tags")
+	private Set<Article> articles = new HashSet<>();
 
 	public String getName() {
 		return name;
@@ -24,5 +38,13 @@ public class Tag {
 
 	public void setPages(Set<Page> pages) {
 		this.pages = pages;
+	}
+
+	public Set<Article> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(Set<Article> articles) {
+		this.articles = articles;
 	}
 }
