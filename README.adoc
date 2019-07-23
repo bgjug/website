@@ -21,10 +21,15 @@ IntelliJ 15 has mvn <3.1, we require >3.1. So install maven separately.
 
 
 
-mvn clean install
+`mvn clean install`
 
-mvn tomee:run
+`mvn tomee:run`
 
-Open localhost:8080
+Open `localhost:8080`
 
 You should see as hello world from a react component running on tomee.
+
+In order to generate SOME data like articles and tags and etc please open `http://localhost:8080/api/test` ones
+
+You can also open the frontend folder and run `npm webpack watch`, but keep in mind any change in JS will restart the server and the test data will be lost.
+
