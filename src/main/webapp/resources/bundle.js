@@ -21583,8 +21583,8 @@
 	    }
 	
 	    _createClass(Articles, [{
-	        key: "refreshData",
-	        value: function refreshData(tagParam) {
+	        key: "refreshArticlesForTag",
+	        value: function refreshArticlesForTag(tagParam) {
 	            var _this2 = this;
 	
 	            var tag = tagParam || 'home';
@@ -21601,7 +21601,17 @@
 	        value: function componentWillMount() {
 	            var tagParam = this.props.routeParams.tag;
 	
-	            this.refreshData(tagParam);
+	            this.refreshArticlesForTag(tagParam);
+	        }
+	    }, {
+	        key: "componentWillReceiveProps",
+	        value: function componentWillReceiveProps() {
+	            var tagParam = this.props.routeParams.tag;
+	
+	            if (this.state.tag !== tagParam) {
+	                //requires refresh of articles
+	                this.refreshArticlesForTag(tagParam);
+	            }
 	        }
 	    }, {
 	        key: "render",
@@ -21617,11 +21627,7 @@
 	            // }
 	            //
 	            // return <div>{container}</div>;
-	            var tagParam = this.props.routeParams.tag;
-	            if (this.state.tag !== tagParam) {
-	                //requires refresh of articles
-	                this.refreshData(tagParam);
-	            }
+	
 	            //alternative way
 	            return _react2.default.createElement(
 	                "div",

@@ -8,7 +8,7 @@ export default class Articles extends Component {
         this.state = {articles: [], tag: null};
     }
 
-    refreshData(tagParam) {
+    refreshArticlesForTag(tagParam) {
         const tag = tagParam || 'home';
 
         ApiCall.get("/api/article/tag/" + tag)
@@ -23,10 +23,16 @@ export default class Articles extends Component {
     componentWillMount(){
         const tagParam = this.props.routeParams.tag;
 
-        this.refreshData(tagParam);
+        this.refreshArticlesForTag(tagParam);
     }
 
+    componentWillReceiveProps (){
+        const tagParam = this.props.routeParams.tag;
 
+        if (this.state.tag !== tagParam) { //requires refresh of articles
+            this.refreshArticlesForTag(tagParam)
+        }
+    }
 
     render() {
         // let container = [];
@@ -38,10 +44,7 @@ export default class Articles extends Component {
         // }
         //
         // return <div>{container}</div>;
-        const tagParam = this.props.routeParams.tag;
-        if (this.state.tag !== tagParam) { //requires refresh of articles
-            this.refreshData(tagParam)
-        }
+
         //alternative way
         return (
             <div>
