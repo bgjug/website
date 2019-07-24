@@ -71,6 +71,10 @@
 	
 	var _reactRouter = __webpack_require__(208);
 	
+	var _tagsFooter = __webpack_require__(263);
+	
+	var _tagsFooter2 = _interopRequireDefault(_tagsFooter);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(_tags2.default, { hashHistory: _reactRouter.hashHistory }), document.querySelector('#tags'));
@@ -84,32 +88,9 @@
 	    );
 	};
 	
-	// const routing = (
-	//     <Router>
-	//         <div>
-	//             <ul>
-	//                 <li>
-	//                     <Link to="/">Home</Link>
-	//                 </li>
-	//                 <li>
-	//                     <Link to="/users">Users</Link>
-	//                 </li>
-	//                 <li>
-	//                     <Link to="/contact">Contact</Link>
-	//                 </li>
-	//             </ul>
-	//             <Switch>
-	//                 <Route exact path="/" component={App} />
-	//                 <Route path="/users/:id" component={Users} />
-	//                 <Route path="/contact" component={Contact} />
-	//                 <Route component={Notfound} />
-	//             </Switch>
-	//         </div>
-	//     </Router>
-	// )
-	
-	
 	_reactDom2.default.render(_react2.default.createElement(Routing, null), document.querySelector('#articles'));
+	
+	_reactDom2.default.render(_react2.default.createElement(_tagsFooter2.default, { hashHistory: _reactRouter.hashHistory }), document.querySelector('#footer-menu'));
 
 /***/ },
 /* 2 */
@@ -23450,7 +23431,6 @@
 	        value: function handleLinkClick(e, link) {
 	            e.preventDefault();
 	            this.hashHistory.push(link);
-	            // window.location.reload();
 	        }
 	    }, {
 	        key: "render",
@@ -23461,7 +23441,6 @@
 	                "ul",
 	                { className: "nav navbar-nav navbar-right" },
 	                this.state.tags.map(function (tag, i) {
-	                    // let link = "/#/" + tag.name;
 	                    var link = "/" + tag.name;
 	                    return _react2.default.createElement(
 	                        "li",
@@ -28410,6 +28389,98 @@
 	  });
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _apiCall = __webpack_require__(181);
+	
+	var _apiCall2 = _interopRequireDefault(_apiCall);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TagsFooter = function (_Component) {
+	    _inherits(TagsFooter, _Component);
+	
+	    function TagsFooter(props) {
+	        _classCallCheck(this, TagsFooter);
+	
+	        var _this = _possibleConstructorReturn(this, (TagsFooter.__proto__ || Object.getPrototypeOf(TagsFooter)).call(this, props));
+	
+	        _this.state = { tags: [] };
+	        _this.hashHistory = _this.props.hashHistory;
+	        return _this;
+	    }
+	
+	    _createClass(TagsFooter, [{
+	        key: "componentWillMount",
+	        value: function componentWillMount() {
+	            var _this2 = this;
+	
+	            var articles = _apiCall2.default.get("/api/tag").then(function (response) {
+	                return _this2.setState({ tags: response.data });
+	            });
+	        }
+	    }, {
+	        key: "handleLinkClick",
+	        value: function handleLinkClick(e, link) {
+	            e.preventDefault();
+	            this.hashHistory.push(link);
+	            window.scrollTo({
+	                top: 0,
+	                left: 0,
+	                behavior: 'smooth'
+	            });
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var _this3 = this;
+	
+	            return _react2.default.createElement(
+	                "ul",
+	                { className: "footer-menu" },
+	                this.state.tags.map(function (tag, i) {
+	                    var link = "/" + tag.name;
+	                    return _react2.default.createElement(
+	                        "li",
+	                        { key: i },
+	                        _react2.default.createElement(
+	                            "a",
+	                            { href: "#", onClick: function onClick(e) {
+	                                    return _this3.handleLinkClick(e, link);
+	                                } },
+	                            tag.name
+	                        )
+	                    );
+	                })
+	            );
+	        }
+	    }]);
+	
+	    return TagsFooter;
+	}(_react.Component);
+	
+	exports.default = TagsFooter;
 
 /***/ }
 /******/ ]);
