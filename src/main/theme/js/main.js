@@ -1,6 +1,5 @@
 
 //Roof Social Icons Tooltip
-$('.social-link').tooltip();
 
 $(document).ready(function () {
 
