@@ -67,6 +67,14 @@ public class TestJaxRS {
         eventsTag.setName("events");
         tagRepository.save(eventsTag);
 
+        Tag newsTag = new Tag();
+        newsTag.setName("news");
+        tagRepository.save(newsTag);
+
+        Tag cfpTag = new Tag();
+        cfpTag.setName("submit a talk");
+        tagRepository.save(cfpTag);
+
         Tag contactsTag = new Tag();
         contactsTag.setName("contacts");
         tagRepository.save(contactsTag);
