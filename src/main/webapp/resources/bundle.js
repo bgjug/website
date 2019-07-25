@@ -75,6 +75,10 @@
 	
 	var _tagsFooter2 = _interopRequireDefault(_tagsFooter);
 	
+	var _cfp = __webpack_require__(264);
+	
+	var _cfp2 = _interopRequireDefault(_cfp);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(_tags2.default, { hashHistory: _reactRouter.hashHistory }), document.querySelector('#tags'));
@@ -84,6 +88,7 @@
 	        _reactRouter.Router,
 	        { history: _reactRouter.hashHistory },
 	        _react2.default.createElement(_reactRouter.Route, { path: "/", component: _articles2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: "submit%20a%20talk", component: _cfp2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: "/:tag", component: _articles2.default })
 	    );
 	};
@@ -28481,6 +28486,155 @@
 	}(_react.Component);
 	
 	exports.default = TagsFooter;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CfpSubmit = function (_Component) {
+	    _inherits(CfpSubmit, _Component);
+	
+	    function CfpSubmit(props) {
+	        _classCallCheck(this, CfpSubmit);
+	
+	        var _this = _possibleConstructorReturn(this, (CfpSubmit.__proto__ || Object.getPrototypeOf(CfpSubmit)).call(this, props));
+	
+	        _this.onChange = function (e) {
+	            return _this.setState(_defineProperty({}, e.target.name, e.target.value));
+	        };
+	
+	        _this.state = {
+	            name: "",
+	            email: "",
+	            topic: "",
+	            details: "",
+	            error: false
+	        };
+	
+	        _this.onSubmit = _this.onSubmit.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(CfpSubmit, [{
+	        key: "onSubmit",
+	        value: function onSubmit(event) {
+	            event.preventDefault();
+	
+	            var data = {
+	                name: event.target.name.value,
+	                email: event.target.email.value,
+	                topic: event.target.topic.value,
+	                details: event.target.details.value
+	            };
+	
+	            if (!(data.name && data.email && data.topic && data.details)) {
+	                this.setState({ error: true });
+	            } else {
+	                this.setState({ error: false });
+	                console.log(data);
+	            }
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	
+	            var error = null;
+	            if (this.state.error) {
+	                error = _react2.default.createElement(
+	                    "div",
+	                    { className: "alert alert-danger" },
+	                    _react2.default.createElement(
+	                        "strong",
+	                        null,
+	                        "Please fill all fields."
+	                    )
+	                );
+	            }
+	
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                error,
+	                _react2.default.createElement(
+	                    "form",
+	                    { onSubmit: this.onSubmit },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "form-group" },
+	                        _react2.default.createElement(
+	                            "label",
+	                            { htmlFor: "name" },
+	                            "Your Name:"
+	                        ),
+	                        _react2.default.createElement("input", { id: "name", type: "text", name: "name", className: "form-control", value: this.state.name || "",
+	                            onChange: this.onChange })
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "form-group" },
+	                        _react2.default.createElement(
+	                            "label",
+	                            { htmlFor: "email" },
+	                            "Your Email:"
+	                        ),
+	                        _react2.default.createElement("input", { id: "email", type: "text", name: "email", className: "form-control", value: this.state.email || "",
+	                            onChange: this.onChange })
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "form-group" },
+	                        _react2.default.createElement(
+	                            "label",
+	                            { htmlFor: "topic" },
+	                            "Topic proposal :"
+	                        ),
+	                        _react2.default.createElement("input", { id: "topic", type: "text", name: "topic", className: "form-control", value: this.state.topic || "",
+	                            onChange: this.onChange })
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "form-group" },
+	                        _react2.default.createElement(
+	                            "label",
+	                            { htmlFor: "details" },
+	                            "Details :"
+	                        ),
+	                        _react2.default.createElement("textarea", { id: "details", name: "details", className: "text-area text-box multi-line form-control",
+	                            rows: "5", "data-val-length-max": "2048", value: this.state.details || "",
+	                            onChange: this.onChange })
+	                    ),
+	                    _react2.default.createElement("input", { type: "submit", value: "submit", className: "btn btn-primary" })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return CfpSubmit;
+	}(_react.Component);
+	
+	exports.default = CfpSubmit;
 
 /***/ }
 /******/ ]);
