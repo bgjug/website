@@ -19,17 +19,32 @@ We use `mvn frontend:install-node-and-npm` to install project specific versions 
 
 IntelliJ 15 has mvn <3.1, we require >3.1. So install maven separately.
 
+= Running the backend
 
+The backend is using Quarkus and needs just a little tweak before it is started.
+You'll first need to install the database which for testing purposes can be ran with docker.
+To run the database execute the following line in your terminal:
 
-`mvn clean install`
+[shell]
+----
+docker run --network="host" --name mariadbtest -e MYSQL_ROOT_PASSWORD=admin -d mariadb/server:10.1
+----
 
-`mvn tomee:run`
+Normally the server will bind to port `3306`. Your database user is `root` and the password is `admin`.
 
-Open `localhost:8080`
+When the container is running, connect to the database server and create the database:
 
-You should see as hello world from a react component running on tomee.
+[sql]
+----
+CREATE DATABASE bgjug CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+----
 
-In order to generate SOME data like articles and tags and etc please open `http://localhost:8080/api/test` ones
+After a success you should be able to start the application server and send requests to it.
+To start the server in developer mode execute: `./mvnw compile quarkus:dev`
+
+NOTE: Since the database creation strategy is `drop-and-create` you will see exceptions in the server log when you run it for the first time.
+This is fine as hibernate is trying to query the deletion of non-existing tables.
+
+In order to generate SOME data like articles and tags and etc please open `http://localhost:8080/api/test` once
 
 You can also open the frontend folder and run `npm webpack watch`, but keep in mind any change in JS will restart the server and the test data will be lost.
-

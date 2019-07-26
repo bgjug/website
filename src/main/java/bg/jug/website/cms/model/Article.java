@@ -4,32 +4,18 @@ import bg.jug.website.core.model.AbstractEntity;
 import bg.jug.website.taxonomy.model.Tag;
 import bg.jug.website.user.model.User;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NamedQuery(name = Article.FIND_ALL, query = "SELECT a FROM Article a LEFT JOIN FETCH a.author ORDER BY a.createdDate DESC")
-@NamedQuery(name = Article.FIND_BY_ID, query = "SELECT a FROM Article a LEFT JOIN FETCH a.author WHERE a.id = ?1")
-@NamedQuery(name = Article.FIND_ALL_BY_TAG, query = "SELECT a FROM Article a JOIN a.tags t WHERE t.name = ?1")
 public class Article extends AbstractEntity {
 
-    public static final String FIND_ALL = "findAllArticles";
-    public static final String FIND_BY_ID = "findArticleById";
-    public static final String FIND_ALL_BY_TAG = "findAllArticlesByTag";
+    public static final String FIND_ALL = "SELECT a FROM Article a LEFT JOIN FETCH a.author ORDER BY a.createdDate DESC";
+    public static final String FIND_ALL_BY_TAG = "SELECT a FROM Article a JOIN a.tags t WHERE t.name = ?1";
 
     @NotNull
     @Size(min=1, max=150)
@@ -43,8 +29,7 @@ public class Article extends AbstractEntity {
     private boolean published = false;
 
 //    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
 
 //    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -81,11 +66,11 @@ public class Article extends AbstractEntity {
         this.published = published;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 

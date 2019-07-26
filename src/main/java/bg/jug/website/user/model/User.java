@@ -6,23 +6,22 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Collections;
 import java.util.List;
+
 
 @Entity
 public class User extends AbstractEntity {
 
 	private final static String DEFAULT_ROLE = "reader";
-	
+
 	private String nickname;
 
 	private String fullname;
 
 	@JsonbTransient
 	private String email;
-	
+
 	@Lob
 	@JsonbTransient
 	private byte[] photo;

@@ -1,24 +1,35 @@
-.classpath
+# Eclipse
 .project
-.settings
-.DS_Store
-dependency-reduced-pom.xml
-target/
-*.iml
-*.ipr
-*.iws
-*.swp
-/*/src/main/java/META-INF
-.gitignore.swp
-docs/reference/src/main/docbook/en-US/version_info.xml
-src/main/webapp/resources/bundle.js
+.classpath
+.settings/
+bin/
+
+# IntelliJ
 .idea
-.forge_settings
-.factorypath
-atlassian-ide-plugin.xml
-.externalToolBuilders
-phantomjsdriver.log
-derby.log
-sun-appserv-samples/
-node-modules/
-src/main/frontend/node_modules/
+*.ipr
+*.iml
+*.iws
+
+# NetBeans
+nb-configuration.xml
+
+# Visual Studio Code
+.vscode
+
+# OSX
+.DS_Store
+
+# Vim
+*.swp
+*.swo
+
+# patch
+*.orig
+*.rej
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties

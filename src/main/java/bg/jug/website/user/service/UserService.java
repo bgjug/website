@@ -3,7 +3,6 @@ package bg.jug.website.user.service;
 import bg.jug.website.core.util.CryptUtils;
 import bg.jug.website.core.util.JwtUtils;
 import bg.jug.website.user.model.User;
-import bg.jug.website.user.repository.UserRepository;
 import bg.jug.website.user.service.dto.LoginDetails;
 import bg.jug.website.user.service.dto.RoleUpdate;
 import org.apache.commons.lang.RandomStringUtils;
@@ -28,9 +27,6 @@ public class UserService {
     private static final int JWT_EXPIRE_SECONDS = 3600;
 
     @Inject
-    private UserRepository userRepository;
-
-    @Inject
     private JwtUtils jwtUtils;
 
     @POST
@@ -40,7 +36,9 @@ public class UserService {
         // TODO Check if email is already registered
         String salt = RandomStringUtils.randomAlphanumeric(20);
         String encrypted = CryptUtils.encryptPassword(registrationDetails.getPassword() + salt);
-        User newUser = userRepository.save(new User(registrationDetails.getEmail(), encrypted, salt));
+        User newUser = new User(registrationDetails.getEmail(), encrypted, salt);
+        newUser.persist();
+
         return Response.ok().header("Authorization", getJwt(newUser)).build();
     }
 
@@ -48,7 +46,8 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/login")
     public Response loginUser(LoginDetails loginDetails) {
-        User user = userRepository.findOptionalByEmail(loginDetails.getEmail());
+        User user = User.find("email", loginDetails.getEmail()).firstResult();
+
         if (user == null) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -67,7 +66,7 @@ public class UserService {
     @RolesAllowed("admin")
     @Transactional
     public Response addRoles(RoleUpdate newRoles) {
-        User user = userRepository.findOptionalByEmail(newRoles.getEmail());
+        User user = User.find("email", newRoles.getEmail()).firstResult();
         if (user == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
