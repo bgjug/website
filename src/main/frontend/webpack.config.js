@@ -5,7 +5,7 @@ module.exports = {
     './src/index.js'
   ],
   output: {
-    path: path.join(__dirname, '../webapp/resources'),
+    path: path.join(__dirname, '../resources/META-INF/resources'),
     publicPath: '/',
     filename: 'bundle.js'
   },
