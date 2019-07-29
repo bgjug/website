@@ -24,7 +24,7 @@ public class ArticleService {
     @RolesAllowed("admin")
     public Response createArticle(@Valid Article article) {
         article.persist();
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.CREATED).entity(article).build();
     }
 
     @PUT
@@ -32,6 +32,10 @@ public class ArticleService {
     @Transactional
     @RolesAllowed("admin")
     public Response updateArticle(@Valid Article article) {
+        if(article.getId() == null || article.getId() == 0) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
         Article persisted = Article.findById(article.getId());
 
         if(persisted == null) {

@@ -27,7 +27,7 @@ To run the database execute the following line in your terminal:
 
 [shell]
 ----
-docker run --network="host" --name mariadbtest -e MYSQL_ROOT_PASSWORD=admin -d mariadb/server:10.1
+ docker run --network="host" --name mysql-test -e MYSQL_ROOT_PASSWORD=admin -d mysql:5
 ----
 
 Normally the server will bind to port `3306`. Your database user is `root` and the password is `admin`.

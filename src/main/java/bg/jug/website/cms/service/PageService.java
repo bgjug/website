@@ -34,6 +34,11 @@ public class PageService {
     @Transactional
     @RolesAllowed("admin")
     public Response updatePage(@Valid Page page) {
+
+        if(page.getId() == null || page.getId() == 0) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
         Page persisted = Page.findById(page.getId());
 
         if (persisted == null) {
@@ -42,7 +47,7 @@ public class PageService {
             EntityUtils.updateEntity(persisted, page);
 
             //Eager fetching. Otherwise page will not serialize
-            page.getTags().size();
+            persisted.getTags().size();
             return Response.ok(persisted).build();
         }
     }

@@ -35,6 +35,10 @@ public class TagService {
     @Transactional
     @RolesAllowed("admin")
     public Response update(Tag tag) {
+        if(tag.getId() == null || tag.getId() == 0) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
         Tag persisted = Tag.findById(tag.getId());
 
         if (persisted == null) {
