@@ -4,7 +4,14 @@ import bg.jug.website.core.model.AbstractEntity;
 import bg.jug.website.taxonomy.model.Tag;
 import bg.jug.website.user.model.User;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -36,7 +43,7 @@ public class Article extends AbstractEntity {
     @JoinColumn(name = "AUTHOR_ID")
     private User author;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(name = "article_tag",
                     joinColumns = @JoinColumn(name = "article_id"),
                     inverseJoinColumns = @JoinColumn(name = "tag_id"))
