@@ -4,6 +4,7 @@ import bg.jug.website.cms.model.Article;
 import bg.jug.website.cms.model.Page;
 import bg.jug.website.core.model.AbstractEntity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
@@ -18,9 +19,11 @@ public class Tag extends AbstractEntity {
 	@Size(min=1, max=255)
 	private String name;
 
+	@JsonbTransient
 	@ManyToMany(mappedBy = "tags")
 	private Set<Page> pages = new HashSet<>();
 
+	@JsonbTransient
 	@ManyToMany(mappedBy = "tags")
 	private Set<Article> articles = new HashSet<>();
 

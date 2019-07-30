@@ -1,24 +1,18 @@
 package bg.jug.website.core.model;
 
-import javax.persistence.*;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
-@MappedSuperclass
-public abstract class AbstractEntity {
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	private Long id;
+public abstract class AbstractEntity extends PanacheEntity  {
 
-	@Version
-	private Integer version;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator="entitySeq")
+//    private Long id;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
+    public Long getId() {
+        return this.id;
+    }
 }
-
