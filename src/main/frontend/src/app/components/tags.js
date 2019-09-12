@@ -13,9 +13,17 @@ export default class Tags extends Component {
         //     })};
     }
 
-    componentWillMount(){
+    componentWillMount() {
+        let self = this;
         let articles = ApiCall.get("/api/tag")
-            .then((response) => this.setState({tags: response.data}));
+            .then((response) => this.setState({tags: response.data}))
+            .catch(function (error) {
+                if (error.response && error.response.status === 401) {
+                    //the bearer has expired, redirect to login
+                    sessionStorage.removeItem("jwtToken");
+                    self.hashHistory.push("/login");
+                }
+            });
     }
 
     handleLinkClick(e, link) {

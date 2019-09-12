@@ -1,7 +1,6 @@
 package bg.jug.website.taxonomy.model;
 
 import bg.jug.website.cms.model.Article;
-import bg.jug.website.cms.model.Page;
 import bg.jug.website.core.model.AbstractEntity;
 
 import javax.json.bind.annotation.JsonbTransient;
@@ -14,14 +13,11 @@ import java.util.Set;
 
 @Entity
 public class Tag extends AbstractEntity {
+	public static final String FIND_BY_NAME = "SELECT t FROM Tag t WHERE t.name = ?1";
 
 	@NotNull
 	@Size(min=1, max=255)
 	private String name;
-
-	@JsonbTransient
-	@ManyToMany(mappedBy = "tags")
-	private Set<Page> pages = new HashSet<>();
 
 	@JsonbTransient
 	@ManyToMany(mappedBy = "tags")
@@ -33,14 +29,6 @@ public class Tag extends AbstractEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Set<Page> getPages() {
-		return pages;
-	}
-
-	public void setPages(Set<Page> pages) {
-		this.pages = pages;
 	}
 
 	public Set<Article> getArticles() {

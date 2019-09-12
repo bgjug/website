@@ -2,16 +2,28 @@ package bg.jug.website.cms.service;
 
 import bg.jug.website.cms.model.Article;
 import bg.jug.website.core.util.EntityUtils;
+import bg.jug.website.taxonomy.model.Tag;
 import io.quarkus.panache.common.Page;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RequestScoped
 @Path("/article")
@@ -23,8 +35,28 @@ public class ArticleService {
     @Transactional
     @RolesAllowed("admin")
     public Response createArticle(@Valid Article article) {
+        replaceTagsWithExistingOnes(article);
         article.persist();
         return Response.status(Response.Status.CREATED).entity(article).build();
+    }
+
+    private void replaceTagsWithExistingOnes(@Valid Article article) {
+        if (article.getTags() != null && !article.getTags().isEmpty()) {
+            Set<Tag> tagsToPersist = new HashSet<>();
+            article.getTags().stream()
+                   .forEach(possiblyNewTag ->
+                            {
+                                List<Tag> existingTags = Tag.find(Tag.FIND_BY_NAME, possiblyNewTag.getName()).page(
+                                                Page.of(0, 1)).list();
+                                if(existingTags != null && !existingTags.isEmpty()) {
+                                    Tag existingTag = existingTags.get(0);
+                                    tagsToPersist.add(existingTag);
+                                } else {
+                                    tagsToPersist.add(possiblyNewTag);
+                                }
+                            });
+            article.setTags(tagsToPersist);
+        }
     }
 
     @PUT
@@ -43,6 +75,7 @@ public class ArticleService {
 
         } else {
             EntityUtils.updateEntity(persisted, article);
+            replaceTagsWithExistingOnes(article);
             //Eager fetching. Otherwise article will not serialize
             persisted.getTags().size();
             return Response.ok(persisted).build();

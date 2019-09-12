@@ -1,6 +1,6 @@
 package bg.jug.website.cms.service;
 
-import bg.jug.website.cms.model.Page;
+import bg.jug.website.cms.model.Event;
 import bg.jug.website.core.util.EntityUtils;
 
 import javax.annotation.security.RolesAllowed;
@@ -16,35 +16,35 @@ import java.util.List;
  * @author Ivan St. Ivanov
  */
 @RequestScoped
-@Path("/page")
+@Path("/event")
 @Produces(MediaType.APPLICATION_JSON)
-public class PageService {
+public class EventService {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     @RolesAllowed("admin")
-    public Response createPage(@Valid Page newPage) {
-        newPage.persist();
-        return Response.status(Response.Status.CREATED).entity(newPage).build();
+    public Response createEvent(@Valid Event newEvent) {
+        newEvent.persist();
+        return Response.status(Response.Status.CREATED).entity(newEvent).build();
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     @RolesAllowed("admin")
-    public Response updatePage(@Valid Page page) {
+    public Response updateEvent(@Valid Event event) {
 
-        if(page.getId() == null || page.getId() == 0) {
+        if(event.getId() == null || event.getId() == 0) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        Page persisted = Page.findById(page.getId());
+        Event persisted = Event.findById(event.getId());
 
         if (persisted == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         } else {
-            EntityUtils.updateEntity(persisted, page);
+            EntityUtils.updateEntity(persisted, event);
 
             //Eager fetching. Otherwise page will not serialize
             persisted.getTags().size();
@@ -56,10 +56,10 @@ public class PageService {
     @Path("/{id}")
     @Transactional
     @RolesAllowed("admin")
-    public Response deletePage(@PathParam("id") String id) {
-        Page page = Page.findById(Long.parseLong(id));
-        if (page != null) {
-            page.delete();
+    public Response deleteEvent(@PathParam("id") String id) {
+        Event event = Event.findById(Long.parseLong(id));
+        if (event != null) {
+            event.delete();
         }
 
         return Response.status(Response.Status.NO_CONTENT).build();
@@ -67,20 +67,20 @@ public class PageService {
 
     @GET
     @Path("/{id}")
-    public Response findPage(@PathParam("id") String id) {
-        Page page = Page.findById(Long.parseLong(id));
-        if (page == null) {
+    public Response findEvent(@PathParam("id") String id) {
+        Event event = Event.findById(Long.parseLong(id));
+        if (event == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return Response.status(Response.Status.OK).entity(page).build();
+        return Response.status(Response.Status.OK).entity(event).build();
     }
 
     @GET
-    public Response allPages(@DefaultValue("1") @QueryParam("page") int page,
+    public Response allEvents(@DefaultValue("1") @QueryParam("page") int page,
                              @DefaultValue("10") @QueryParam("size") int size) {
-        List<Page> allPages = Page.findAll().page(io.quarkus.panache.common.Page.of(page - 1, size)).list();
-        return Response.ok(allPages).build();
+        List<Event> allEvents = Event.findAll().page(io.quarkus.panache.common.Page.of(page - 1, size)).list();
+        return Response.ok(allEvents).build();
     }
 
 }

@@ -22,7 +22,7 @@ import java.util.Set;
 public class Article extends AbstractEntity {
 
     public static final String FIND_ALL = "SELECT a FROM Article a LEFT JOIN FETCH a.author ORDER BY a.createdDate DESC";
-    public static final String FIND_ALL_BY_TAG = "SELECT a FROM Article a JOIN a.tags t WHERE t.name = ?1";
+    public static final String FIND_ALL_BY_TAG = "SELECT a FROM Article a JOIN a.tags t WHERE t.name = ?1 ORDER BY a.createdDate DESC";
 
     @NotNull
     @Size(min=1, max=150)
