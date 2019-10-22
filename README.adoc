@@ -32,7 +32,9 @@ To run the database execute the following line in your terminal:
 
 Normally the server will bind to port `3306`. Your database user is `root` and the password is `admin`.
 
-When the container is running, connect to the database server and create the database:
+Alternatively you can install a local MySQL/MariaDB engine version 5.7 (do not use 8.x) and set the root password to 'admin'
+
+When the container is running (or when your local database is running), connect to the database server and create the database:
 
 [sql]
 ----
