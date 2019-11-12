@@ -45,6 +45,17 @@ export default class Article extends Component {
             </span>
         );
 
+        let eventPart = (
+            <span>
+                <p>
+                    <b> When:</b> {new Date(this.props.article.eventDate).toLocaleString()}
+                </p>
+                <p>
+                    <b> Where:</b> {this.props.article.location}
+                </p>
+                <p/>
+            </span>);
+
         return (
             <article>
                 <div className='blog-item-wrap'>
@@ -55,10 +66,10 @@ export default class Article extends Component {
                     <h2 className='blog-title'>{this.props.article.title}</h2>
                     <div className='entry-meta'>
                         <span className='meta-part'><i className='ico-user'/> <a href='#'>Bulgarian Java User Group</a></span> <span
-                        className='meta-part'><i className='ico-calendar-alt-fill'/> <a
-                        href='#'>{this.props.article.createdDate}</a></span>
+                        className='meta-part'><i className='ico-calendar-alt-fill'/>{new Date(this.props.article.createdDate).toLocaleString()}</span>
                     </div>
                     <div className='post-content'>
+                        {this.props.article.eventDate? eventPart : ""}
                         <p dangerouslySetInnerHTML={{__html: this.props.article.content || "N/A" }}>
                         </p>
                     </div>
@@ -68,3 +79,6 @@ export default class Article extends Component {
         );
     }
 }
+
+
+

@@ -24,7 +24,7 @@ public class TestJaxRS {
     @Transactional
     public List<Article> testMe() {
         Article home = new Article();
-        home.setContent("Home Baby");
+        home.setContent("Da HOME Baby");
         home.setPublished(true);
         home.setTitle("Home");
         home.persist();

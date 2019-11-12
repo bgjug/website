@@ -46,6 +46,13 @@ export default class SidebarPosts extends Component {
                             (article, i) => {
                                 const singleArticleLink = "index.html#/article/" + article.id;
 
+                                let publishedDate = "";
+                                if (article.eventDate) {
+                                    publishedDate = (<span><i className="ico-calendar-alt-fill"/>&nbsp;Date: {new Date(article.createdDate).toLocaleString()}</span>);
+                                } else {
+                                    publishedDate = (<span><i className="ico-calendar-alt-fill"/>&nbsp;Published: {new Date(article.createdDate).toLocaleDateString()}</span>);
+                                }
+
                                 return <li key={i}>
                                     <div className="widget-thumb">
                                         <i className={thumbClass} style={iconStyle}/>
@@ -54,7 +61,7 @@ export default class SidebarPosts extends Component {
                                         <a href={singleArticleLink} onClick={() => this.openArticle(article.id)}>
                                             {article.title}</a>
                                         <div className="meta">
-                                            <span><i className="ico-calendar-alt-fill"/>Published: {article.createdDate}</span>
+                                            {publishedDate}
                                         </div>
                                     </div>
                                     <div className="clearfix"/>

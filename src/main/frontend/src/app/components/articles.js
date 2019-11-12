@@ -56,7 +56,11 @@ export default class Articles extends Component {
     }
 
     handleArticleAdd(event, tag) {
-        this.props.router.push("/edit-article/new");
+        if(tag !== "events") {
+            this.props.router.push("/edit-article/new-article");
+        } else {
+            this.props.router.push("/edit-article/new-event");
+        }
     }
 
     render() {
