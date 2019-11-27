@@ -2,7 +2,7 @@ package bg.jug.website.core.util;
 
 import bg.jug.website.core.model.AbstractEntity;
 import org.hibernate.engine.spi.EntityEntry;
-import org.ocpsoft.logging.Logger;
+import org.jboss.logging.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
