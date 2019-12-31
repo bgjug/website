@@ -1,36 +1,26 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: [
-    './src/index.js'
-  ],
+  mode: "development",
+  entry: ["./src/index.js"],
   output: {
-    path: path.join(__dirname, '../resources/META-INF/resources'),
-    publicPath: '/',
-    filename: 'bundle.js'
+    path: path.join(__dirname, "../resources/META-INF/resources"),
+    publicPath: "/",
+    filename: "bundle.js"
   },
   module: {
-    loaders: [
+    rules: [
       {
+        test: /\.m?js$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015', 'stage-1']
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: ["@babel/plugin-proposal-class-properties"]
+          }
         }
       }
     ]
-  },
-  resolve: {
-    alias: {
-      source: __dirname+ '/src',
-      customFiles: __dirname + '/src/custom_files',
-      localesDir: __dirname + '/src/locales'
-    },
-    extensions: ['', '.js', '.jsx']
-  },
-  devServer: {
-    historyApiFallback: true,
-    contentBase: './'
-  },
-    devtool: 'source-map'
+  }
 };
