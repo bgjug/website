@@ -49,4 +49,6 @@ This is fine as hibernate is trying to query the deletion of non-existing tables
 
 In order to generate SOME data like articles and tags and etc please open `http://localhost:8080/api/test` once
 
-You can also open the frontend folder and run `npm webpack watch`, but keep in mind any change in JS will restart the server and the test data will be lost.
+Alternatively you should import the database backup
+
+You can also open the frontend folder and run `npm run watch`, but keep in mind any change in JS will restart the server and the test data will be lost.
