@@ -47,7 +47,9 @@ export default class Articles extends Component {
         if (articleId) {//single article view
             this.loadSingleArticleById(articleId);
         } else { //list articles for tag
-            const tagParam = this.props.routeParams.tag;
+            let tagParam = this.props.routeParams.tag;
+
+            tagParam = tagParam || 'home';
 
             if (this.state.tag !== tagParam) { //requires refresh of articles
                 this.refreshArticlesForTag(tagParam)
