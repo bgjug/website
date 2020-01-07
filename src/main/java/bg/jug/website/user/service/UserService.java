@@ -26,8 +26,7 @@ public class UserService {
 
     private static final int JWT_EXPIRE_SECONDS = 3600;
 
-    @Inject
-    private JwtUtils jwtUtils;
+    @Inject JwtUtils jwtUtils;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
