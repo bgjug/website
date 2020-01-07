@@ -28,7 +28,7 @@ import java.util.Set;
 @RequestScoped
 @Path("/article")
 @Produces(MediaType.APPLICATION_JSON)
-public class ArticleService {
+public class ArticleService extends TagAwareService {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -38,25 +38,6 @@ public class ArticleService {
         replaceTagsWithExistingOnes(article);
         article.persist();
         return Response.status(Response.Status.CREATED).entity(article).build();
-    }
-
-    private void replaceTagsWithExistingOnes(@Valid Article article) {
-        if (article.getTags() != null && !article.getTags().isEmpty()) {
-            Set<Tag> tagsToPersist = new HashSet<>();
-            article.getTags().stream()
-                   .forEach(possiblyNewTag ->
-                            {
-                                List<Tag> existingTags = Tag.find(Tag.FIND_BY_NAME, possiblyNewTag.getName()).page(
-                                                Page.of(0, 1)).list();
-                                if(existingTags != null && !existingTags.isEmpty()) {
-                                    Tag existingTag = existingTags.get(0);
-                                    tagsToPersist.add(existingTag);
-                                } else {
-                                    tagsToPersist.add(possiblyNewTag);
-                                }
-                            });
-            article.setTags(tagsToPersist);
-        }
     }
 
     @PUT
