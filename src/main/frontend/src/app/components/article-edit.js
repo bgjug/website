@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import ApiCall from "../services/api-call";
 import ReactMarkdown from "react-markdown/with-html";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
 export default class ArticleEdit extends Component {
     constructor(props) {
@@ -186,12 +188,22 @@ export default class ArticleEdit extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="title">Content:</label>
-                                    <textarea id="contenta" name="content" className="form-control grey-textarea"  rows="10" value={this.state.content || ""}
-                                           onChange={this.onChange}/>
-                                    <ReactMarkdown
-                                        source={this.state.content || ""}
-                                        escapeHtml={false}
-                                    />
+                                    <Tabs aria-label="simple tabs example">
+                                        <Tab label="Source" />
+                                            <textarea id="contenta" name="content" className="form-control grey-textarea"  rows="10" value={this.state.content || ""}
+                                                      onChange={this.onChange}/>
+                                        <Tab label="Preview"/>
+                                            <ReactMarkdown
+                                                source={this.state.content || ""}
+                                                escapeHtml={false}
+                                            />
+                                    </Tabs>
+                                    <Tab value={value} index={0}>
+                                        Item One
+                                    </Tab>
+                                    <TabPanel value={value} index={0}>
+                                        Item One
+                                    </TabPanel>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="topic">Tag :</label>
