@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import JwtUtil from "../services/jwt-util";
 import ApiCall from "../services/api-call";
+import ReactMarkdown from "react-markdown/with-html";
 
 export default class Article extends Component {
     constructor(props) {
@@ -70,8 +71,10 @@ export default class Article extends Component {
                     </div>
                     <div className='post-content'>
                         {this.props.article.eventDate? eventPart : ""}
-                        <p dangerouslySetInnerHTML={{__html: this.props.article.content || "N/A" }}>
-                        </p>
+                        <ReactMarkdown
+                            source={this.props.article.content || "N/A" }
+                            escapeHtml={false}
+                        />
                     </div>
                     {readmore}
                 </div>

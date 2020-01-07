@@ -3,6 +3,48 @@ import ApiCall from "../services/api-call";
 import ReactMarkdown from "react-markdown/with-html";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import PropTypes from 'prop-types';
+import {makeStyles} from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <Typography
+            component="div"
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && <Box p={3}>{children}</Box>}
+        </Typography>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
+}));
 
 export default class ArticleEdit extends Component {
     constructor(props) {
@@ -12,14 +54,17 @@ export default class ArticleEdit extends Component {
             title: "",
             content: "",
             tag: "",
-            message: null
+            message: null,
+            selectedIndex:0
         };
 
         this.onSubmit = this.onSubmit.bind(this);
         // this.goToRegister = this.goToRegister.bind(this);
+
     }
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
+    onTabChange = (e, newValue) => this.setState({selectedIndex:newValue});
 
     // goToRegister(event)  {
     //     this.props.router.push("/registration");
@@ -173,7 +218,8 @@ export default class ArticleEdit extends Component {
                );
         }
 
-        return (
+
+            return (
             <div className="row">
                 <div className="col-md-12">
                     <div id="articles">
@@ -188,21 +234,21 @@ export default class ArticleEdit extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="title">Content:</label>
-                                    <Tabs aria-label="simple tabs example">
-                                        <Tab label="Source" />
-                                            <textarea id="contenta" name="content" className="form-control grey-textarea"  rows="10" value={this.state.content || ""}
-                                                      onChange={this.onChange}/>
-                                        <Tab label="Preview"/>
-                                            <ReactMarkdown
-                                                source={this.state.content || ""}
-                                                escapeHtml={false}
-                                            />
+                                    <Tabs value={this.state.selectedIndex} onChange={this.onTabChange} aria-label="simple tabs example">
+                                        <Tab label="Source" {...a11yProps(0)}/>
+                                        <Tab label="Preview" {...a11yProps(0)}/>
+
                                     </Tabs>
-                                    <Tab value={value} index={0}>
-                                        Item One
-                                    </Tab>
-                                    <TabPanel value={value} index={0}>
-                                        Item One
+                                    <TabPanel value={this.state.selectedIndex} index={0}>
+                                       <textarea id="contenta" name="content" className="form-control grey-textarea"  rows="10" value={this.state.content || ""}
+                                                 onChange={this.onChange}/>
+                                    </TabPanel>
+                                    <TabPanel value={this.state.selectedIndex} index={1}>
+                                        <ReactMarkdown
+                                            source={this.state.content || ""}
+                                            escapeHtml={false}
+                                            className="form-control grey-textarea min200"
+                                        />
                                     </TabPanel>
                                 </div>
                                 <div className="form-group">
