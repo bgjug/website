@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import ApiCall from "../services/api-call";
+import ReactMarkdown from "react-markdown/with-html";
 
 export default class ArticleEdit extends Component {
     constructor(props) {
@@ -187,6 +188,10 @@ export default class ArticleEdit extends Component {
                                     <label htmlFor="title">Content:</label>
                                     <textarea id="contenta" name="content" className="form-control grey-textarea"  rows="10" value={this.state.content || ""}
                                            onChange={this.onChange}/>
+                                    <ReactMarkdown
+                                        source={this.state.content || ""}
+                                        escapeHtml={false}
+                                    />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="topic">Tag :</label>
