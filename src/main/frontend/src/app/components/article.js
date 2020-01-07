@@ -62,7 +62,7 @@ export default class Article extends Component {
                 <div className='blog-item-wrap'>
                     <div className='post-format'>
                         {JwtUtil.isCurrentUserAdmin() ? adminMenu : ""}
-                        <span><i className='fa fa-code'/></span>
+                        <span><i className='fa fa-newspaper-o'/></span>
                     </div>
                     <h2 className='blog-title'>{this.props.article.title}</h2>
                     <div className='entry-meta'>
