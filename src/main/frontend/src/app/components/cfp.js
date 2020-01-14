@@ -8,9 +8,10 @@ export default class CfpSubmit extends Component {
         this.state = {
             name: "",
             email: "",
-            topic: "",
+            title: "",
             details: "",
-            error: false
+            error: false,
+            message:null
         };
 
         this.onSubmit = this.onSubmit.bind(this)
@@ -24,15 +25,25 @@ export default class CfpSubmit extends Component {
         const data = {
             name: event.target.name.value,
             email: event.target.email.value,
-            topic: event.target.topic.value,
+            title: event.target.title.value,
             details: event.target.details.value
         };
 
 
-        if (!(data.name && data.email && data.topic && data.details)) {
+        if (!(data.name && data.email && data.title && data.details)) {
             this.setState({error: true});
         } else {
-            ApiCall.post("/api/submission", JSON.stringify(data));
+            let self = this;
+            ApiCall.post("/api/submission", JSON.stringify(data)).then((response) => {
+                console.log(response.headers);
+                if(response.status === 201) {
+                    self.setState({message: "Submission created, thank you! Stay tuned, you will be contacted soon ;)"});
+                }
+            }).catch(function (error) {
+                    // handle error
+                    console.log(error);
+                    self.setState({message: error.response.status});
+                });
             this.setState({error: false});
             console.log(data);
         }
@@ -49,6 +60,42 @@ export default class CfpSubmit extends Component {
             </div>);
         }
 
+        let message = null;
+        if(this.state.message) {
+            message = (
+                <div className="alert alert-danger">
+                    <strong>{this.state.message}</strong>
+                </div>
+            );
+        }
+
+        let form = (
+            <form onSubmit={this.onSubmit}>
+                <div className="form-group">
+                    <label htmlFor="name">Your Name:</label>
+                    <input id="name" type="text" name="name" className="form-control" value={this.state.name || ""}
+                           onChange={this.onChange}/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="email">Your Email:</label>
+                    <input id="email" type="text" name="email" className="form-control" value={this.state.email || ""}
+                           onChange={this.onChange}/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="title">Topic proposal title :</label>
+                    <input id="title" type="text" name="title" className="form-control" value={this.state.title || ""}
+                           onChange={this.onChange}/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="details">Details :</label>
+                    <textarea id="details" name="details" className="text-area text-box multi-line form-control"
+                              rows="5" data-val-length-max="2048" value={this.state.details || ""}
+                              onChange={this.onChange}/>
+                </div>
+                <input type="submit" value="submit" className="btn btn-primary"/>
+            </form>
+        );
+
         return (
             <div className="row">
                 <div className="col-md-12">
@@ -56,30 +103,7 @@ export default class CfpSubmit extends Component {
                         <article>
                             <div>
                                 {error}
-                                <form onSubmit={this.onSubmit}>
-                                    <div className="form-group">
-                                        <label htmlFor="name">Your Name:</label>
-                                        <input id="name" type="text" name="name" className="form-control" value={this.state.name || ""}
-                                               onChange={this.onChange}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="email">Your Email:</label>
-                                        <input id="email" type="text" name="email" className="form-control" value={this.state.email || ""}
-                                               onChange={this.onChange}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="topic">Topic proposal :</label>
-                                        <input id="topic" type="text" name="topic" className="form-control" value={this.state.topic || ""}
-                                               onChange={this.onChange}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="details">Details :</label>
-                                        <textarea id="details" name="details" className="text-area text-box multi-line form-control"
-                                                  rows="5" data-val-length-max="2048" value={this.state.details || ""}
-                                        onChange={this.onChange}/>
-                                    </div>
-                                    <input type="submit" value="submit" className="btn btn-primary"/>
-                                </form>
+                                {this.state.message == null ? form : message}
                             </div>
                         </article>
                     </div>
