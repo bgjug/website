@@ -16,7 +16,7 @@ public class TagAwareService {
     protected void replaceTagsWithExistingOnes(Article article) {
         if (article.getTags() != null && !article.getTags().isEmpty()) {
             Set<Tag> tagsToPersist = new HashSet<>();
-            article.getTags().stream()
+            article.getTags()
                    .forEach(possiblyNewTag ->
                             {
                                 List<Tag> existingTags = Tag.find(Tag.FIND_BY_NAME, possiblyNewTag.getName()).page(
