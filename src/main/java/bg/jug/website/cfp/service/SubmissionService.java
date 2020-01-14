@@ -1,10 +1,13 @@
 package bg.jug.website.cfp.service;
 
 import bg.jug.website.cfp.model.Submission;
+import io.quarkus.mailer.Mail;
+import io.quarkus.mailer.Mailer;
 import io.quarkus.panache.common.Page;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -23,11 +26,21 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class SubmissionService {
 
+    @Inject
+    Mailer mailer;
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public Response createArticle(@Valid Submission submission) {
         submission.persist();
+
+        String emailBody = "From:" + submission.getName() + "<" + submission.getEmail() + ">\n"
+                        + "Topic:" + submission.getTitle() + "\n"
+                        + "Talk details:" + submission.getDetails() + "\n";
+        mailer.send(Mail.withText("bg-jug-board@googlegroups.com", "jug.bg cfp form submission:" + submission.getTitle(),
+                                  emailBody));
+
         return Response.status(Response.Status.CREATED).entity(submission).build();
     }
 
