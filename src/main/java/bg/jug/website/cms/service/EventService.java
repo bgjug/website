@@ -53,13 +53,13 @@ public class EventService extends TagAwareService {
 
         if (persisted == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
-        } else {
-            EntityUtils.updateEntity(persisted, event);
-            replaceTagsWithExistingOnes(event);
-            //Eager fetching. Otherwise page will not serialize
-            persisted.getTags().size();
-            return Response.ok(persisted).build();
         }
+
+        EntityUtils.updateEntity(persisted, event);
+        replaceTagsWithExistingOnes(event);
+        //Eager fetching. Otherwise page will not serialize
+        persisted.getTags().size();
+        return Response.ok(persisted).build();
     }
 
     @DELETE
