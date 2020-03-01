@@ -3,6 +3,7 @@
 .classpath
 .settings/
 bin/
+config/
 
 # IntelliJ
 .idea
