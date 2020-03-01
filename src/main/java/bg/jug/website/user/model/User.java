@@ -6,9 +6,7 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import java.util.Collections;
-import java.util.List;
-
+import java.util.*;
 
 @Entity
 public class User extends AbstractEntity {
@@ -30,7 +28,7 @@ public class User extends AbstractEntity {
 	private String bio;
 
 	@JsonbTransient
-	private String password;
+	private byte[] password;
 
 	@JsonbTransient
 	private String salt;
@@ -42,13 +40,13 @@ public class User extends AbstractEntity {
 	public User() {
 	}
 
-	public User(String email, String password, String salt) {
+	public User(String email, byte[] password, String salt) {
 		this(null, null, email, null, null, password, salt,
-				Collections.singletonList(DEFAULT_ROLE));
+				new ArrayList<>(Collections.singletonList(DEFAULT_ROLE)));
 	}
 
 	public User(String nickname, String fullname, String email, byte[] photo,
-				String bio, String password, String salt, List<String> roles) {
+				String bio, byte[] password, String salt, List<String> roles) {
 		this.nickname = nickname;
 		this.fullname = fullname;
 		this.email = email;
@@ -89,10 +87,10 @@ public class User extends AbstractEntity {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
-	public String getPassword() {
+	public byte[] getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(byte[] password) {
 		this.password = password;
 	}
 	public String getSalt() {
