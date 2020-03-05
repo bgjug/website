@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Articles from "./app/components/articles";
 import Tags from "./app/components/tags";
+import MobileTags from "./app/components/mobiletags";
 import {hashHistory, Route, Router} from 'react-router'
 import TagsFooter from "./app/components/tags-footer";
 import CfpSubmit from "./app/components/cfp";
@@ -15,6 +16,9 @@ ReactDOM.render(
     <Tags hashHistory={hashHistory}/>
     , document.querySelector('#tags'));
 
+ReactDOM.render(
+    <MobileTags hashHistory={hashHistory}/>
+    , document.querySelector('.slicknav_nav'));
 
 
 const Routing = () => (
