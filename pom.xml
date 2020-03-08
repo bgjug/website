@@ -84,6 +84,10 @@
       <artifactId>quarkus-mailer</artifactId>
       <version>${quarkus.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-multipart-provider</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
