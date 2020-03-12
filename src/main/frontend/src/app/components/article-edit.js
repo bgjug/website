@@ -200,7 +200,7 @@ export default class ArticleEdit extends Component {
         }
         //if it is an event
         let eventInputs = "";
-        if(this.state.location) {
+        if(this.state.tag === "events") {
                eventInputs = (
                    <span>
                        <div className="form-group">

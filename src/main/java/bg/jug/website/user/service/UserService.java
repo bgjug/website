@@ -18,6 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
 
 @RequestScoped
 @Path("/user")
@@ -33,9 +34,13 @@ public class UserService {
     @Transactional
     public Response registerUser(@Valid LoginDetails registrationDetails) {
         // TODO Check if email is already registered
+
         String salt = RandomStringUtils.randomAlphanumeric(20);
-        String encrypted = CryptUtils.encryptPassword(registrationDetails.getPassword() + salt);
+        byte[] encrypted = CryptUtils.encryptPassword(registrationDetails.getPassword() + salt);
         User newUser = new User(registrationDetails.getEmail(), encrypted, salt);
+        if (User.findAll().count() == 0) {
+            newUser.getRoles().add("admin");
+        }
         newUser.persist();
 
         return Response.ok().header("Authorization", getJwt(newUser)).build();
@@ -51,8 +56,8 @@ public class UserService {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        String encrypted = CryptUtils.encryptPassword(loginDetails.getPassword() + user.getSalt());
-        if (!user.getPassword().equals(encrypted)) {
+        byte[] encrypted = CryptUtils.encryptPassword(loginDetails.getPassword() + user.getSalt());
+        if (!Arrays.equals(user.getPassword(), encrypted)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 

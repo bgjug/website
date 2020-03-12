@@ -18,7 +18,7 @@
     <node.version>v8.9.1</node.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus.version>1.0.0.Final</quarkus.version>
+    <quarkus.version>1.2.1.Final</quarkus.version>
     <rewrite-servlet.version>3.4.1.Final</rewrite-servlet.version>
     <surefire-plugin.version>2.22.0</surefire-plugin.version>
     <yarn.version>v1.3.2</yarn.version>
@@ -83,6 +83,10 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-mailer</artifactId>
       <version>${quarkus.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-multipart-provider</artifactId>
     </dependency>
   </dependencies>
   <build>

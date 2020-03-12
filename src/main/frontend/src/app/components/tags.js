@@ -13,7 +13,7 @@ export default class Tags extends Component {
         //     })};
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let self = this;
         let articles = ApiCall.get("/api/tag")
             .then((response) => this.setState({tags: response.data}))
