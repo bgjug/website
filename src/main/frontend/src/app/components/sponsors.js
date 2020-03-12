@@ -7,6 +7,7 @@ export default class Sponsors extends Component {
     constructor(props) {
         super(props);
         this.state = {sponsors: []};
+        this.hashHistory = this.props.hashHistory;
     }
 
     loadSingleSponsorById = (id) => {
@@ -37,7 +38,7 @@ export default class Sponsors extends Component {
             left: 0,
             behavior: 'smooth'
         });
-        this.props.router.push("/add-sponsor/new-sponsor");
+        this.hashHistory.push("/add-sponsor/new-sponsor");
     }
 
     render() {
@@ -46,7 +47,7 @@ export default class Sponsors extends Component {
         };
 
         let sponsors = this.state.sponsors.map((sponsor, i) => {
-            return <Sponsor key={i} sponsor={sponsor} router={this.props.router}
+            return <Sponsor key={i} sponsor={sponsor} hashHistory={this.hashHistory}
                             loadSponsors={this.loadSponsors}/>
         });
 

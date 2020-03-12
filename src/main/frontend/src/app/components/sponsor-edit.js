@@ -128,8 +128,8 @@ export default class SponsorEdit extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="title">URL:</label>
-                                    <textarea id="web_url" name="web_url"
-                                              className="form-control grey-textarea" rows="10"
+                                    <input id="web_url" name="web_url" type="text"
+                                              className="form-control grey-textarea"
                                               value={this.state.web_url || ""}
                                               onChange={this.onChange}/>
                                 </div>

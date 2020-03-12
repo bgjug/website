@@ -3,13 +3,10 @@ import Article from "./article";
 import ApiCall from "../services/api-call";
 import JwtUtil from "../services/jwt-util";
 
-export let articles;
-
 export default class Articles extends Component {
     constructor(props) {
         super(props);
         this.state = {articles: [], tag: null};
-        articles = this;
     }
 
     refreshArticlesForTag = (tagParam) => {

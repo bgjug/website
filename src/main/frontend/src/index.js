@@ -43,7 +43,7 @@ ReactDOM.render(<SidebarPosts tag="events" hashHistory={hashHistory}/>, document
 
 ReactDOM.render(<SidebarPosts tag="news" hashHistory={hashHistory}/>, document.querySelector('#tab2'));
 
-ReactDOM.render(<Sponsors router={articles.props.router}/>, document.querySelector('#sponsors_list'));
+ReactDOM.render(<Sponsors hashHistory={hashHistory}/>, document.querySelector('#sponsors_list'));
 
 ReactDOM.render(<TagsFooter hashHistory={hashHistory}/>, document.querySelector('#footer-menu'));
 

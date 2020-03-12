@@ -4,6 +4,7 @@ import JwtUtil from "../services/jwt-util";
 export default class Sponsor extends Component {
     constructor(props) {
         super(props);
+        this.hashHistory = this.props.hashHistory;
     }
 
     componentDidMount() {
@@ -15,7 +16,7 @@ export default class Sponsor extends Component {
             left: 0,
             behavior: 'smooth'
         });
-        this.props.router.push("/edit-sponsor/" + id);
+        this.hashHistory.push("/edit-sponsor/" + id);
     }
 
     handleSponsorRemove(event, id) {
